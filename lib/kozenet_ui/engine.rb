@@ -59,11 +59,21 @@ module KozenetUi
     end
 
     initializer "kozenet_ui.assets" do |app|
-      if app.config.respond_to?(:assets) && app.config.assets.respond_to?(:paths)
-        app.config.assets.paths << root.join("app/assets/stylesheets/kozenet_ui")
-        app.config.assets.paths << root.join("app/assets/stylesheets/kozenet_ui/components")
-        app.config.assets.paths << root.join("app/assets/images/kozenet_ui/icons")
+      # Add all Kozenet UI asset paths for stylesheets and images
+      %w[
+        app/assets/stylesheets/kozenet_ui
+        app/assets/stylesheets/kozenet_ui/components
+        app/assets/images/kozenet_ui/icons
+      ].each do |path|
+        app.config.assets.paths << root.join(path)
       end
+
+      # Precompile Kozenet UI CSS files for all asset setups
+      app.config.assets.precompile += %w[
+        kozenet_ui/tokens.css
+        kozenet_ui/base.css
+        kozenet_ui/components.css
+      ]
     end
   end
 
