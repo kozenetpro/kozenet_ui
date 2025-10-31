@@ -1,6 +1,6 @@
 # Kozenet UI
 
-[![CI](https://github.com/kozenetpro/kozenet_ui/actions/workflows/main.yml/badge.svg?branch=master)](https://github.com/kozenetpro/kozenet_ui/actions/workflows/main.yml)
+[![Ruby](https://github.com/kozenetpro/kozenet_ui/actions/workflows/main.yml/badge.svg)](https://github.com/kozenetpro/kozenet_ui/actions/workflows/main.yml)
 ![Test Status](https://img.shields.io/badge/tests-passing-brightgreen?style=flat-square)
 
 Beautiful, minimal, Apple-inspired UI components for Rails.
