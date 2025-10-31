@@ -51,9 +51,9 @@ module KozenetUi
     def badge_content
       if icon?
         safe_join([
-          tag.span(class: "kz-badge-icon") { icon },
-          tag.span { content }
-        ])
+                    tag.span(class: "kz-badge-icon") { icon },
+                    tag.span { content }
+                  ])
       else
         content
       end

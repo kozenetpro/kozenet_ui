@@ -70,26 +70,26 @@ module KozenetUi
       class << self
         def to_css_variables
           variables = []
-          
+
           # Spacing
           SPACING.each { |key, value| variables << "--kz-spacing-#{key}: #{value};" }
-          
+
           # Radius
           RADIUS.each { |key, value| variables << "--kz-radius-#{key}: #{value};" }
-          
+
           # Typography
           FONT_SIZE.each { |key, value| variables << "--kz-font-size-#{key}: #{value};" }
           FONT_WEIGHT.each { |key, value| variables << "--kz-font-weight-#{key}: #{value};" }
-          
+
           # Shadows
           SHADOW.each { |key, value| variables << "--kz-shadow-#{key}: #{value};" }
-          
+
           # Transitions
           TRANSITION.each { |key, value| variables << "--kz-transition-#{key}: #{value};" }
-          
+
           # Z-index
           Z_INDEX.each { |key, value| variables << "--kz-z-#{key}: #{value};" }
-          
+
           variables.join("\n          ")
         end
       end

@@ -50,8 +50,9 @@ module KozenetUi
 
         # Brand colors with shades (only for valid hex colors)
         @colors.each do |name, hex|
-          next if name.to_s.start_with?("gradient_spot_") 
-          next if name.to_s.end_with?("_dark") 
+          next if name.to_s.start_with?("gradient_spot_")
+          next if name.to_s.end_with?("_dark")
+
           if hex.is_a?(String) && hex.match?(/^#(?:[0-9a-fA-F]{3}){1,2}$/)
             shades = generate_shades(hex)
             shades.each do |shade, color|
@@ -66,26 +67,26 @@ module KozenetUi
         # Semantic neutrals
         neutrals = mode == :dark ? NEUTRALS_DARK : NEUTRALS_LIGHT
         neutrals.each do |name, value|
-          variables << "--kz-#{name.to_s.tr('_', '-')}: #{value};"
+          variables << "--kz-#{name.to_s.tr("_", "-")}: #{value};"
         end
 
         # Gradient tokens (allow user to override or fallback to palette)
         if mode == :dark
-          variables << "--gradient-base-from: #{@colors[:gradient_from_dark] || '#181c2a'};"
-          variables << "--gradient-base-to: #{@colors[:gradient_to_dark] || '#23283a'};"
-          variables << "--gradient-accent-from: #{@colors[:gradient_accent_from_dark] || '#1e40af'};"
-          variables << "--gradient-accent-via: #{@colors[:gradient_accent_via_dark] || '#0369a1'};"
-          variables << "--gradient-accent-to: #{@colors[:gradient_accent_to_dark] || '#0891b2'};"
-          variables << "--gradient-spot-1: #{@colors[:gradient_spot_1_dark] || 'rgba(56,189,248,0.20)'};"
-          variables << "--gradient-spot-2: #{@colors[:gradient_spot_2_dark] || 'rgba(99,102,241,0.18)'};"
+          variables << "--gradient-base-from: #{@colors[:gradient_from_dark] || "#181c2a"};"
+          variables << "--gradient-base-to: #{@colors[:gradient_to_dark] || "#23283a"};"
+          variables << "--gradient-accent-from: #{@colors[:gradient_accent_from_dark] || "#1e40af"};"
+          variables << "--gradient-accent-via: #{@colors[:gradient_accent_via_dark] || "#0369a1"};"
+          variables << "--gradient-accent-to: #{@colors[:gradient_accent_to_dark] || "#0891b2"};"
+          variables << "--gradient-spot-1: #{@colors[:gradient_spot_1_dark] || "rgba(56,189,248,0.20)"};"
+          variables << "--gradient-spot-2: #{@colors[:gradient_spot_2_dark] || "rgba(99,102,241,0.18)"};"
         else
-          variables << "--gradient-base-from: #{@colors[:gradient_from] || '#f0f9ff'};"
-          variables << "--gradient-base-to: #{@colors[:gradient_to] || '#e0f2fe'};"
-          variables << "--gradient-accent-from: #{@colors[:gradient_accent_from] || '#6366f1'};"
-          variables << "--gradient-accent-via: #{@colors[:gradient_accent_via] || '#0ea5e9'};"
-          variables << "--gradient-accent-to: #{@colors[:gradient_accent_to] || '#06b6d4'};"
-          variables << "--gradient-spot-1: #{@colors[:gradient_spot_1] || 'rgba(99,102,241,0.35)'};"
-          variables << "--gradient-spot-2: #{@colors[:gradient_spot_2] || 'rgba(14,165,233,0.30)'};"
+          variables << "--gradient-base-from: #{@colors[:gradient_from] || "#f0f9ff"};"
+          variables << "--gradient-base-to: #{@colors[:gradient_to] || "#e0f2fe"};"
+          variables << "--gradient-accent-from: #{@colors[:gradient_accent_from] || "#6366f1"};"
+          variables << "--gradient-accent-via: #{@colors[:gradient_accent_via] || "#0ea5e9"};"
+          variables << "--gradient-accent-to: #{@colors[:gradient_accent_to] || "#06b6d4"};"
+          variables << "--gradient-spot-1: #{@colors[:gradient_spot_1] || "rgba(99,102,241,0.35)"};"
+          variables << "--gradient-spot-2: #{@colors[:gradient_spot_2] || "rgba(14,165,233,0.30)"};"
         end
 
         variables.join("\n    ")
@@ -96,7 +97,7 @@ module KozenetUi
       # Generate 50-900 shades from a base color
       def generate_shades(hex)
         base = Color::RGB.by_hex(hex)
-        
+
         {
           50 => lighten(base, 0.45).html,
           100 => lighten(base, 0.35).html,

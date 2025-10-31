@@ -5,7 +5,7 @@ require "rails_helper"
 RSpec.describe KozenetUi::HeaderComponent, type: :component do
   it "renders header with default options" do
     render_inline(described_class.new)
-    
+
     expect(page).to have_css("header.kz-header")
     expect(page).to have_css(".kz-header-sticky")
     expect(page).to have_css(".kz-header-blur")
@@ -15,7 +15,7 @@ RSpec.describe KozenetUi::HeaderComponent, type: :component do
     render_inline(described_class.new) do |header|
       header.with_brand(href: "/") { "Logo" }
     end
-    
+
     expect(page).to have_css("a.kz-brand[href='/']")
     expect(page).to have_text("Logo")
   end
@@ -25,7 +25,7 @@ RSpec.describe KozenetUi::HeaderComponent, type: :component do
       header.with_nav_item(href: "/courses", active: true) { "Courses" }
       header.with_nav_item(href: "/pricing") { "Pricing" }
     end
-    
+
     expect(page).to have_css(".kz-nav-link[href='/courses'].is-active")
     expect(page).to have_css(".kz-nav-link[href='/pricing']")
   end
@@ -34,7 +34,7 @@ RSpec.describe KozenetUi::HeaderComponent, type: :component do
     render_inline(described_class.new) do |header|
       header.with_search(placeholder: "Search...")
     end
-    
+
     expect(page).to have_css(".kz-search-wrap")
     expect(page).to have_css("input[placeholder='Search...']")
   end
@@ -43,7 +43,7 @@ RSpec.describe KozenetUi::HeaderComponent, type: :component do
     render_inline(described_class.new) do |header|
       header.with_action_button(href: "/cart", icon: :cart, label: "Cart")
     end
-    
+
     expect(page).to have_css("a.kz-action-btn[href='/cart']")
   end
 
@@ -51,14 +51,14 @@ RSpec.describe KozenetUi::HeaderComponent, type: :component do
     render_inline(described_class.new) do |header|
       header.with_cta(href: "/signup") { "Sign up" }
     end
-    
+
     expect(page).to have_css("a.kz-cta[href='/signup']")
     expect(page).to have_text("Sign up")
   end
 
   it "renders mobile menu trigger" do
     render_inline(described_class.new)
-    
+
     expect(page).to have_css("button.kz-mobile-trigger")
   end
 end

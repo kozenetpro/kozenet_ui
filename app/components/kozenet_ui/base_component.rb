@@ -33,14 +33,19 @@ module KozenetUi
     # Get variant class from Variants helper
     def variant_class
       return nil unless @variant
-      
+
       component_type = self.class.name.demodulize.underscore.gsub("_component", "")
-      KozenetUi::Theme::Variants.public_send(component_type, @variant) rescue nil
+      begin
+        KozenetUi::Theme::Variants.public_send(component_type, @variant)
+      rescue StandardError
+        nil
+      end
     end
 
     # Get size class from Variants helper
     def size_class
       return nil unless @size
+
       KozenetUi::Theme::Variants.size(@size)
     end
 
@@ -60,7 +65,9 @@ module KozenetUi
 
     # Check if running in dark mode (from request or config)
     def dark_mode?
-      helpers.cookies[:theme] == "dark" rescue false
+      helpers.cookies[:theme] == "dark"
+    rescue StandardError
+      false
     end
 
     # Get current theme palette

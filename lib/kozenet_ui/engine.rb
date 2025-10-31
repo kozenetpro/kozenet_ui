@@ -14,7 +14,7 @@ module KozenetUi
 
     # This is CRITICAL - tells Rails where to find generators
     config.app_generators.scaffold_controller = :scaffold_controller
-    
+
     initializer "kozenet_ui.generators" do
       # Explicitly add generators path
       config.generators do |g|
@@ -29,7 +29,7 @@ module KozenetUi
     if config.respond_to?(:assets) && config.assets.respond_to?(:paths)
       config.assets.paths << root.join("app/assets/stylesheets")
       config.assets.paths << root.join("app/assets/javascripts")
-      
+
       # Precompile assets
       config.assets.precompile += %w[
         kozenet_ui/tokens.css
@@ -53,7 +53,7 @@ module KozenetUi
     # Inject CSS variables into layout
     initializer "kozenet_ui.theme_injection", after: :load_config_initializers do
       ActiveSupport.on_load(:action_view) do
-        ActionView::Base.prepend(ThemeHelper)
+        ActiveSupport.on_load(:action_view) { prepend ThemeHelper }
       end
     end
 
@@ -79,7 +79,7 @@ module KozenetUi
         :root {
           /* Design Tokens */
           #{tokens.to_css_variables}
-          
+        #{"  "}
           /* Color Palette (Light Mode) */
           #{palette.to_css_variables(mode: :light)}
         }

@@ -15,28 +15,29 @@ module KozenetUi
 
       def copy_css_files_to_app
         # do NOT copy CSS files to the app. Let the gem expose them via the asset pipeline.
-        say "Kozenet UI stylesheets are now available via the asset pipeline. Import them in your Tailwind/application.css:", :green
-        say "\n@import 'kozenet_ui/tokens.css';\n@import 'kozenet_ui/base.css';\n@import 'kozenet_ui/components.css';\n", :cyan
+        say "Kozenet UI stylesheets are now available via the asset pipeline. Import them in your Tailwind/application.css:",
+            :green
+        say "\n@import 'kozenet_ui/tokens.css';\n@import 'kozenet_ui/base.css';\n@import 'kozenet_ui/components.css';\n",
+            :cyan
       end
-      
+
       def add_stylesheets_to_application
         tailwind_css = nil
-        if File.exist?("app/assets/stylesheets/application.css")
-          tailwind_css = "app/assets/stylesheets/application.css"
-        end
+        tailwind_css = "app/assets/stylesheets/application.css" if File.exist?("app/assets/stylesheets/application.css")
 
         if tailwind_css
           content = File.read(tailwind_css)
           kozenet_imports = "\n/* Kozenet UI Styles */\n@import 'kozenet_ui/tokens.css';\n@import 'kozenet_ui/base.css';\n@import 'kozenet_ui/components.css';\n"
 
-          unless content.include?("kozenet_ui/base.css")
+          if content.include?("kozenet_ui/base.css")
+            say "File unchanged! Kozenet UI styles already present in #{tailwind_css}", :yellow
+          else
             append_to_file tailwind_css, kozenet_imports
             say "Appended Kozenet UI styles to #{tailwind_css}", :green
-          else
-            say "File unchanged! Kozenet UI styles already present in #{tailwind_css}", :yellow
           end
         else
-          say "⚠️  Could not find app/assets/stylesheets/application.css. Please manually import Kozenet UI stylesheets.", :yellow
+          say "⚠️  Could not find app/assets/stylesheets/application.css. Please manually import Kozenet UI stylesheets.",
+              :yellow
         end
       end
 

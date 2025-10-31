@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module KozenetUi
   # Apple-inspired button component with smooth interactions
   # Supports multiple variants, sizes, and states
@@ -62,7 +64,7 @@ module KozenetUi
         "focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2",
         "disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
       ]
-      
+
       classes << "w-full" if @full_width
       classes.join(" ")
     end

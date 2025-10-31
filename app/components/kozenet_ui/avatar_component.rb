@@ -59,9 +59,9 @@ module KozenetUi
         stroke_width: "2"
       ) do
         safe_join([
-          tag.circle(cx: "12", cy: "8", r: "5"),
-          tag.path(d: "M20 21a8 8 0 1 0-16 0")
-        ])
+                    tag.circle(cx: "12", cy: "8", r: "5"),
+                    tag.path(d: "M20 21a8 8 0 1 0-16 0")
+                  ])
       end
     end
   end
