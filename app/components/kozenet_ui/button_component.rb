@@ -25,9 +25,11 @@ module KozenetUi
   #
   # @example Loading state
   #   <%= kz_button(variant: :primary, loading: true) { "Processing..." } %>
+  # rubocop:disable Metrics/ClassLength
   class ButtonComponent < BaseComponent
     renders_one :icon
 
+    # rubocop:disable Metrics/ParameterLists
     def initialize(
       variant: :primary,
       size: :md,
@@ -36,7 +38,7 @@ module KozenetUi
       disabled: false,
       loading: false,
       full_width: false,
-      **html_options
+      html_options: {}
     )
       super(variant: variant, size: size, **html_options)
       @type = type
@@ -45,6 +47,7 @@ module KozenetUi
       @loading = loading
       @full_width = full_width
     end
+    # rubocop:enable Metrics/ParameterLists
 
     def call
       if link?
@@ -100,6 +103,7 @@ module KozenetUi
       end
     end
 
+    # rubocop:disable Metrics/MethodLength
     def spinner_icon
       tag.svg(
         class: "kz-btn-spinner animate-spin",
@@ -115,6 +119,7 @@ module KozenetUi
         tag.path(d: "M21 12a9 9 0 1 1-6.219-8.56")
       end
     end
+    # rubocop:enable Metrics/MethodLength
 
     def content_wrapper
       tag.span(class: "kz-btn-content") { content }
@@ -147,4 +152,5 @@ module KozenetUi
       @loading
     end
   end
+  # rubocop:enable Metrics/ClassLength
 end

@@ -4,6 +4,7 @@ require "rails/generators/base"
 
 module KozenetUi
   module Generators
+    # Generator for installing Kozenet UI into a Rails application
     class InstallGenerator < Rails::Generators::Base
       source_root File.expand_path("templates", __dir__)
 
@@ -15,19 +16,23 @@ module KozenetUi
 
       def copy_css_files_to_app
         # do NOT copy CSS files to the app. Let the gem expose them via the asset pipeline.
-        say "Kozenet UI stylesheets are now available via the asset pipeline. Import them in your Tailwind/application.css:",
-            :green
-        say "\n@import 'kozenet_ui/tokens.css';\n@import 'kozenet_ui/base.css';\n@import 'kozenet_ui/components.css';\n",
-            :cyan
+        say "Kozenet UI stylesheets are now available via the asset pipeline. " \
+            "Import them in your Tailwind/application.css:", :green
+        say "\n@import 'kozenet_ui/tokens.css';\n@import 'kozenet_ui/base.css';" \
+            "\n@import 'kozenet_ui/components.css';\n", :cyan
       end
 
+      # rubocop:disable Metrics/MethodLength
       def add_stylesheets_to_application
         tailwind_css = nil
         tailwind_css = "app/assets/stylesheets/application.css" if File.exist?("app/assets/stylesheets/application.css")
 
         if tailwind_css
           content = File.read(tailwind_css)
-          kozenet_imports = "\n/* Kozenet UI Styles */\n@import 'kozenet_ui/tokens.css';\n@import 'kozenet_ui/base.css';\n@import 'kozenet_ui/components.css';\n"
+          kozenet_imports = "\n/* Kozenet UI Styles */\n" \
+            "@import 'kozenet_ui/tokens.css';\n" \
+            "@import 'kozenet_ui/base.css';\n" \
+            "@import 'kozenet_ui/components.css';\n"
 
           if content.include?("kozenet_ui/base.css")
             say "File unchanged! Kozenet UI styles already present in #{tailwind_css}", :yellow
@@ -36,10 +41,11 @@ module KozenetUi
             say "Appended Kozenet UI styles to #{tailwind_css}", :green
           end
         else
-          say "⚠️  Could not find app/assets/stylesheets/application.css. Please manually import Kozenet UI stylesheets.",
-              :yellow
+          say "Could not find app/assets/stylesheets/application.css. " \
+              "Please manually import Kozenet UI stylesheets.", :yellow
         end
       end
+      # rubocop:enable Metrics/MethodLength
 
       def show_readme
         say "\n✅ Kozenet UI installed successfully!", :green

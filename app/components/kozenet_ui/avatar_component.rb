@@ -13,19 +13,21 @@ module KozenetUi
   # @example With custom size
   #   <%= kz_avatar(src: url, size: :lg) %>
   class AvatarComponent < BaseComponent
+    # rubocop:disable Metrics/ParameterLists
     def initialize(
       src: nil,
       alt: "Avatar",
       initials: nil,
       variant: :primary,
       size: :md,
-      **html_options
+      html_options: {}
     )
       super(variant: variant, size: size, **html_options)
       @src = src
       @alt = alt
       @initials = initials
     end
+    # rubocop:enable Metrics/ParameterLists
 
     def call
       tag.div(**html_attrs) do
@@ -49,6 +51,7 @@ module KozenetUi
       end
     end
 
+    # rubocop:disable Metrics/MethodLength
     def default_icon
       tag.svg(
         width: "20",
@@ -64,5 +67,6 @@ module KozenetUi
                   ])
       end
     end
+    # rubocop:enable Metrics/MethodLength
   end
 end

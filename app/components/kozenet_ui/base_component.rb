@@ -7,6 +7,7 @@ module KozenetUi
     attr_reader :variant, :size, :html_options
 
     def initialize(variant: nil, size: nil, class: nil, **html_options)
+      super()
       @variant = variant || KozenetUi.configuration.default_variant
       @size = size || KozenetUi.configuration.default_size
       @custom_class = binding.local_variable_get(:class)

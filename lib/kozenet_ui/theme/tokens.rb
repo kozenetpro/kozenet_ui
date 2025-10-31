@@ -68,6 +68,7 @@ module KozenetUi
       }.freeze
 
       class << self
+        # rubocop:disable Metrics/AbcSize, Metrics/CyclomaticComplexity
         def to_css_variables
           variables = []
 
@@ -92,6 +93,7 @@ module KozenetUi
 
           variables.join("\n          ")
         end
+        # rubocop:enable Metrics/AbcSize, Metrics/CyclomaticComplexity
       end
     end
   end

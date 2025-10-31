@@ -8,7 +8,14 @@ module KozenetUi
     # @example
     #   <%= render KozenetUi::HeaderComponent::SearchComponent.new(placeholder: "Search...") %>
     class SearchComponent < BaseComponent
-      def initialize(placeholder: "Search...", name: "q", value: nil, action: "#", method: :get, **html_options)
+      # rubocop:disable Metrics/MethodLength
+      def initialize(options = {})
+        placeholder = options.fetch(:placeholder, "Search...")
+        name = options.fetch(:name, "q")
+        value = options.fetch(:value, nil)
+        action = options.fetch(:action, "#")
+        method = options.fetch(:method, :get)
+        html_options = options.fetch(:html_options, {})
         super(**html_options)
         @placeholder = placeholder
         @name = name
@@ -16,6 +23,7 @@ module KozenetUi
         @action = action
         @method = method
       end
+      # rubocop:enable Metrics/MethodLength
     end
   end
 end

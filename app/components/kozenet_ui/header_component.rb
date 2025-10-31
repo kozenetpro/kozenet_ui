@@ -1,6 +1,14 @@
 # frozen_string_literal: true
 
 module KozenetUi
+  # Header component for navigation and branding
+  # Supports sticky and blur options, and slots for brand, nav, actions, etc.
+  #
+  # @example Basic usage
+  #   <%= kz_header(sticky: true, blur: true) do |header| %>
+  #     <% header.brand { ... } %>
+  #     <% header.nav_items { ... } %>
+  #   <% end %>
   class HeaderComponent < BaseComponent
     renders_one :brand, "KozenetUi::HeaderComponent::BrandComponent"
     renders_one :search, "KozenetUi::HeaderComponent::SearchComponent"

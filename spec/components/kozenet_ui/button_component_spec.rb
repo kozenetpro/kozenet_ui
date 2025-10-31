@@ -2,6 +2,7 @@
 
 require "rails_helper"
 
+# rubocop:disable Metrics/BlockLength
 RSpec.describe KozenetUi::ButtonComponent, type: :component do
   it "renders a button with default variant" do
     render_inline(described_class.new) { "Click me" }
@@ -56,3 +57,4 @@ RSpec.describe KozenetUi::ButtonComponent, type: :component do
     expect(page).to have_css("button.w-full")
   end
 end
+# rubocop:enable Metrics/BlockLength

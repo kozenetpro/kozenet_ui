@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 module KozenetUi
+  # Configuration for Kozenet UI gem
   class Configuration
     attr_accessor :palette, :default_variant, :default_size, :theme, :stimulus_prefix
 

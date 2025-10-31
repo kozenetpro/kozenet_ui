@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 module KozenetUi
+  # Helper methods for rendering SVG icons in Kozenet UI
   module IconHelper
     # Renders a Heroicon SVG from the gem's assets
     # Usage: kozenet_ui_icon(:cart, class: "w-5 h-5 text-gray-500")

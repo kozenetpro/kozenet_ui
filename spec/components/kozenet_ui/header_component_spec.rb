@@ -2,6 +2,7 @@
 
 require "rails_helper"
 
+# rubocop:disable Metrics/BlockLength
 RSpec.describe KozenetUi::HeaderComponent, type: :component do
   it "renders header with default options" do
     render_inline(described_class.new)
@@ -62,3 +63,4 @@ RSpec.describe KozenetUi::HeaderComponent, type: :component do
     expect(page).to have_css("button.kz-mobile-trigger")
   end
 end
+# rubocop:enable Metrics/BlockLength

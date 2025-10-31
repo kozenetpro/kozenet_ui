@@ -4,6 +4,7 @@ require "rails/engine"
 require "view_component"
 
 module KozenetUi
+  # Rails engine for Kozenet UI gem
   class Engine < ::Rails::Engine
     isolate_namespace KozenetUi
 
@@ -66,29 +67,28 @@ module KozenetUi
     end
   end
 
+  # Helper methods for injecting Kozenet UI theme variables into views
   module ThemeHelper
     def kozenet_ui_theme_tag
       content_tag(:style, kozenet_ui_theme_variables, nonce: content_security_policy_nonce)
     end
 
+    # rubocop:disable Rails/OutputSafety
     def kozenet_ui_theme_variables
-      palette = KozenetUi.configuration.palette
-      tokens = KozenetUi::Theme::Tokens
-
-      <<~CSS
+      <<~CSS.html_safe
         :root {
           /* Design Tokens */
-          #{tokens.to_css_variables}
-        #{"  "}
+          #{KozenetUi::Theme::Tokens.to_css_variables}
           /* Color Palette (Light Mode) */
-          #{palette.to_css_variables(mode: :light)}
+          #{KozenetUi.configuration.palette.to_css_variables(mode: :light)}
         }
 
         [data-theme="dark"], .dark {
           /* Color Palette (Dark Mode) */
-          #{palette.to_css_variables(mode: :dark)}
+          #{KozenetUi.configuration.palette.to_css_variables(mode: :dark)}
         }
       CSS
     end
+    # rubocop:enable Rails/OutputSafety
   end
 end

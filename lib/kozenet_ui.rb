@@ -7,6 +7,7 @@ require_relative "kozenet_ui/theme/tokens"
 require_relative "kozenet_ui/theme/palette"
 require_relative "kozenet_ui/theme/variants"
 
+# Main entry point for Kozenet UI gem
 module KozenetUi
   class Error < StandardError; end
 

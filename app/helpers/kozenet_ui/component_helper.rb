@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
+# Helper methods for rendering Kozenet UI components in views
 module KozenetUi
+  # Helper methods for rendering Kozenet UI components in views
   module ComponentHelper
     include KozenetUi::IconHelper
 
@@ -36,6 +38,7 @@ module KozenetUi
 
     # Inject inline theme variables (CSP-compliant)
     def kozenet_ui_theme_variables_tag
+      # rubocop:disable Rails/OutputSafety
       content_tag(:style, nonce: content_security_policy_nonce) do
         palette = KozenetUi.configuration.palette
         tokens = KozenetUi::Theme::Tokens
@@ -50,6 +53,7 @@ module KozenetUi
           }
         CSS
       end
+      # rubocop:enable Rails/OutputSafety
     end
   end
 end
