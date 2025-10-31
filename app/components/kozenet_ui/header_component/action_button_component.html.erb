@@ -1,0 +1,11 @@
+<%# frozen_string_literal: true %>
+<%# ActionButtonComponent template for KozenetUi::HeaderComponent %>
+<%= tag.a href: @href, class: "kz-action-btn", aria: { label: @label } do %>
+  <% if @icon %>
+    <span class="kz-action-btn-icon"><%= render_icon(@icon) %></span>
+  <% end %>
+  <% if @label %>
+    <span class="kz-action-btn-label"><%= @label %></span>
+  <% end %>
+  <%= content if content.present? %>
+<% end %>

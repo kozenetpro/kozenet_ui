@@ -1,0 +1,81 @@
+<header class="kz-header kz-header-sticky kz-header-blur" data-controller="kz-header kz-mobile-nav" data-action="scroll@window->kz-header#handleScroll">
+  <div class="kz-header-bar" data-kz-header-target="container">
+    <!-- Brand + Navigation -->
+    <div class="kz-header-start">
+      <div class="kz-brand">
+        <%= brand if brand? %>
+      </div>
+      <% if nav_items? %>
+        <nav class="kz-nav-links" aria-label="Primary navigation">
+          <% nav_items.each do |item| %>
+            <%= item %>
+          <% end %>
+        </nav>
+      <% end %>
+    </div>
+
+    <!-- Search (desktop) -->
+    <% if search? %>
+      <div class="kz-search-col">
+        <%= search %>
+      </div>
+    <% end %>
+
+    <!-- Actions -->
+    <div class="kz-header-actions">
+      <!-- Mobile search trigger -->
+      <% if search? %>
+        <button 
+          type="button" 
+          class="kz-action-btn md:hidden" 
+          aria-label="Search"
+          data-action="click->kz-header#toggleSearch"
+        >
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="11" cy="11" r="8"/>
+            <path d="m21 21-4.35-4.35"/>
+          </svg>
+        </button>
+      <% end %>
+
+      <!-- Action buttons -->
+      <% if action_buttons? %>
+        <% action_buttons.each do |button| %>
+          <%= button %>
+        <% end %>
+      <% end %>
+
+      <!-- CTA or User Menu -->
+      <% if user_menu? %>
+        <%= user_menu %>
+      <% elsif cta? %>
+        <%= cta %>
+      <% end %>
+
+      <!-- Mobile menu trigger -->
+      <button 
+        class="kz-mobile-trigger" 
+        type="button"
+        aria-label="Menu"
+        data-action="click->kz-mobile-nav#toggle"
+        data-kz-mobile-nav-target="trigger"
+      >
+        <svg class="kz-icon-menu" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M3 6h18M3 12h18M3 18h18"/>
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- Mobile panel -->
+  <% if mobile_menu? %>
+    <div 
+      class="kz-mobile-panel hidden scale-y-0 origin-top" 
+      data-kz-mobile-nav-target="panel"
+      role="dialog"
+      aria-label="Mobile navigation"
+    >
+      <%= mobile_menu %>
+    </div>
+  <% end %>
+</header>

@@ -3,38 +3,64 @@
 require_relative "lib/kozenet_ui/version"
 
 Gem::Specification.new do |spec|
-  spec.name = "kozenet_ui"
-  spec.version = KozenetUi::VERSION
-  spec.authors = ["rubemoon"]
-  spec.email = ["aprovadosatisfy@gmail.com"]
+  spec.name          = "kozenet_ui"
+  spec.version       = KozenetUi::VERSION
+  spec.authors       = ["Kozenet Pro"]
+  spec.email         = ["kozenetpro@gmail.com"]
 
-  spec.summary = "TODO: Write a short summary, because RubyGems requires one."
-  spec.description = "TODO: Write a longer description or delete this line."
-  spec.homepage = "TODO: Put your gem's website or public repo URL here."
-  spec.license = "MIT"
-  spec.required_ruby_version = ">= 3.2.0"
+  spec.summary       = "Beautiful, minimal, Apple-inspired UI components for Rails"
+  spec.description   = <<~DESC
+    Kozenet UI is a modern, production-ready component library for Ruby on Rails. 
+    Built with ViewComponent and Tailwind CSS, it provides beautiful, accessible, 
+    and customizable UI components with dynamic theming support. Features CSP-compliant 
+    styling, dark mode, and smooth animations.
+  DESC
+  
+  spec.homepage      = "https://github.com/kozenetpro/kozenet_ui"
+  spec.license       = "MIT"
+  spec.required_ruby_version = ">= 3.0.0"
 
-  spec.metadata["allowed_push_host"] = "TODO: Set to your gem server 'https://example.com'"
-  spec.metadata["homepage_uri"] = spec.homepage
-  spec.metadata["source_code_uri"] = "TODO: Put your gem's public repo URL here."
-  spec.metadata["changelog_uri"] = "TODO: Put your gem's CHANGELOG.md URL here."
+  spec.metadata = {
+    "homepage_uri"          => spec.homepage,
+    "source_code_uri"       => "https://github.com/kozenetpro/kozenet_ui",
+    "changelog_uri"         => "https://github.com/kozenetpro/kozenet_ui/blob/main/CHANGELOG.md",
+    "bug_tracker_uri"       => "https://github.com/kozenetpro/kozenet_ui/issues",
+    "documentation_uri"     => "https://github.com/kozenetpro/kozenet_ui/blob/main/README.md",
+    "rubygems_mfa_required" => "true"
+  }
 
-  # Specify which files should be added to the gem when it is released.
-  # The `git ls-files -z` loads the files in the RubyGem that have been added into git.
-  gemspec = File.basename(__FILE__)
-  spec.files = IO.popen(%w[git ls-files -z], chdir: __dir__, err: IO::NULL) do |ls|
-    ls.readlines("\x0", chomp: true).reject do |f|
-      (f == gemspec) ||
-        f.start_with?(*%w[bin/ Gemfile .gitignore .rspec spec/ .github/ .rubocop.yml])
+  # Specify files more precisely to avoid duplicates
+  spec.files = Dir.chdir(File.expand_path(__dir__)) do
+    Dir[
+      "lib/**/*",
+      "app/**/*",
+      "README.md",
+      "LICENSE.txt",
+      "CHANGELOG.md",
+      "CODE_OF_CONDUCT.md"
+    ].reject do |f|
+      f.match(%r{^(test|spec|features)/}) ||
+      File.directory?(f)
     end
   end
-  spec.bindir = "exe"
-  spec.executables = spec.files.grep(%r{\Aexe/}) { |f| File.basename(f) }
+  
   spec.require_paths = ["lib"]
 
-  # Uncomment to register a new dependency of your gem
-  # spec.add_dependency "example-gem", "~> 1.0"
+  # Runtime dependencies
+  spec.add_dependency "railties", ">= 7.0", "< 9.0"
+  spec.add_dependency "view_component", ">= 3.0", "< 4.0"
+  spec.add_dependency "inline_svg", "~> 1.9"
+  spec.add_dependency "color", "~> 1.8"
 
-  # For more information and examples about making a new gem, check out our
-  # guide at: https://bundler.io/guides/creating_gem.html
+  # Development dependencies
+  spec.add_development_dependency "bundler", ">= 2.0"
+  spec.add_development_dependency "rake", "~> 13.0"
+  spec.add_development_dependency "rspec", "~> 3.0"
+  spec.add_development_dependency "rspec-rails", "~> 7.0"
+  spec.add_development_dependency "capybara", "~> 3.0"
+  spec.add_development_dependency "rubocop", "~> 1.50"
+  spec.add_development_dependency "rubocop-rails", "~> 2.20"
+  spec.add_development_dependency "rubocop-rspec", "~> 3.0"
+  spec.add_development_dependency "lookbook", "~> 2.0"
+  spec.add_development_dependency "selenium-webdriver", "~> 4.0"
 end

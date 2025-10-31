@@ -1,0 +1,168 @@
+/* Kozenet UI Design Tokens */
+/* Auto-generated from Ruby tokens - Can be overridden */
+
+@layer base {
+  :root {
+    /* Spacing */
+    --kz-spacing-xs: 0.25rem;
+    --kz-spacing-sm: 0.5rem;
+    --kz-spacing-md: 1rem;
+    --kz-spacing-lg: 1.5rem;
+    --kz-spacing-xl: 2rem;
+    --kz-spacing-2xl: 3rem;
+    --kz-spacing-3xl: 4rem;
+
+    /* Border Radius */
+    --kz-radius-sm: 12px;
+    --kz-radius-md: 16px;
+    --kz-radius-lg: 20px;
+    --kz-radius-xl: 24px;
+    --kz-radius-2xl: 28px;
+    --kz-radius-full: 9999px;
+
+    /* Typography */
+    --kz-font-size-xs: 0.65rem;
+    --kz-font-size-sm: 0.75rem;
+    --kz-font-size-base: 0.875rem;
+    --kz-font-size-lg: 1rem;
+    --kz-font-size-xl: 1.25rem;
+    --kz-font-size-2xl: 1.5rem;
+    --kz-font-size-3xl: 2rem;
+
+    --kz-font-weight-normal: 400;
+    --kz-font-weight-medium: 500;
+    --kz-font-weight-semibold: 600;
+    --kz-font-weight-bold: 700;
+
+    /* Shadows */
+    --kz-shadow-sm: 0 1px 2px rgba(0,0,0,.05), 0 2px 6px -2px rgba(0,0,0,.08);
+    --kz-shadow-md: 0 4px 14px -6px rgba(0,0,0,.25);
+    --kz-shadow-lg: 0 10px 30px -12px rgba(0,0,0,.45);
+    --kz-shadow-xl: 0 20px 60px -26px rgba(0,0,0,.28);
+
+    /* Transitions */
+    --kz-transition-fast: 0.15s ease;
+    --kz-transition-base: 0.25s ease;
+    --kz-transition-slow: 0.35s ease;
+
+    /* Z-index */
+    --kz-z-dropdown: 50;
+    --kz-z-sticky: 60;
+    --kz-z-modal: 70;
+    --kz-z-popover: 80;
+    --kz-z-toast: 90;
+
+    /* Default Light Mode Colors */
+    --kz-bg-base: #ffffff;
+    --kz-bg-elevated: #f8fafc;
+    --kz-bg-muted: #f1f5f9;
+    --kz-text-default: #0f172a;
+    --kz-text-muted: #64748b;
+    --kz-border-default: #e2e8f0;
+    --kz-border-muted: #f1f5f9;
+
+    --kz-primary-500: 99, 102, 241; /* #6366f1 */
+    --kz-accent-500: 6, 182, 212;   /* #06b6d4 */
+    --kz-accent-400: 14, 165, 233;  /* #0ea5e9 */
+    --kz-cta-gradient: linear-gradient(110deg, #6366f1, #0ea5e9 55%, #06b6d4);
+    --kz-cta-gradient-dark: linear-gradient(110deg, #818cf8, #38bdf8 55%, #06b6d4);
+    --kz-cta-text: #fff;
+    --kz-cta-text-dark: #fff;
+
+    --bg-default: #ffffff;
+    --bg-muted: #f8fafc;
+    --bg-elevated: #ffffff;
+    --bg-accent: #0ea5e9;
+    --bg-accent-hover: #0284c7;
+    --text-default: #0f172a;
+    --text-muted: #64748b;
+    --border-default: #e2e8f0;
+    --border-strong: #cbd5e1;
+    --focus-ring: #0ea5e9;
+    --radius-xs: 2px;
+    --radius-sm: 4px;
+    --radius-md: 6px;
+    --radius-lg: 8px;
+    --radius-xl: 12px;
+    --radius-pill: 999px;
+    --shadow-color: 210 40% 2%;
+    --gradient-base-from: #f0f9ff;
+    --gradient-base-to: #e0f2fe;
+    --gradient-accent-from: #6366f1;
+    --gradient-accent-via: #0ea5e9;
+    --gradient-accent-to: #06b6d4;
+    --gradient-spot-1: rgba(99,102,241,0.35);
+    --gradient-spot-2: rgba(14,165,233,0.30);
+  }
+
+  /* Dark Mode */
+  [data-theme="dark"],
+  .dark {
+    --kz-bg-base: #0f172a;
+    --kz-bg-elevated: #1e293b;
+    --kz-bg-muted: #334155;
+    --kz-text-default: #f1f5f9;
+    --kz-text-muted: #94a3b8;
+    --kz-border-default: #334155;
+    --kz-border-muted: #1e293b;
+
+    --kz-cta-gradient: var(--kz-cta-gradient-dark);
+    --kz-cta-text: var(--kz-cta-text-dark);
+
+    --bg-default: #0b0d11;
+    --bg-muted: #11151c;
+    --bg-elevated: rgba(23,28,36,0.9);
+    --bg-accent: #0284c7;
+    --bg-accent-hover: #0369a1;
+    --text-default: #f1f5f9;
+    --text-muted: #64748b;
+    --border-default: #1f242c;
+    --border-strong: #2a3039;
+    --focus-ring: #0ea5e9;
+    --shadow-color: 210 40% 2%;
+    --gradient-base-from: #0b0d11;
+    --gradient-base-to: #11151c;
+    --gradient-accent-from: #1e40af;
+    --gradient-accent-via: #0369a1;
+    --gradient-accent-to: #0891b2;
+    --gradient-spot-1: rgba(56,189,248,0.20);
+    --gradient-spot-2: rgba(99,102,241,0.18);
+  }
+
+  html { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+  body { background: var(--bg-default); color: var(--text-default); font-family: var(--font-sans, ui-sans-serif, system-ui, sans-serif); }
+  * { border-color: var(--border-default); }
+  ::selection { background: var(--bg-accent); color: #fff; }
+  .app-bg { 
+    position: relative;
+    min-height: 100vh;
+    overflow-x: hidden;
+    isolation: isolate;
+  }
+  .app-bg:not(:first-of-type) { background: none !important; }
+  .app-bg::before { 
+    content: "";
+    position: fixed; inset:0; pointer-events:none; z-index:-1;
+    background:
+      radial-gradient(circle at 18% 22%, var(--gradient-spot-1) 0, transparent 60%),
+      radial-gradient(circle at 82% 18%, var(--gradient-spot-2) 0, transparent 62%),
+      linear-gradient(135deg, var(--gradient-base-from) 0%, var(--gradient-base-to) 100%);
+    background-attachment: fixed;
+  }
+  .dark .app-bg::before {
+    background:
+      radial-gradient(circle at 18% 22%, var(--gradient-spot-1) 0, transparent 60%),
+      radial-gradient(circle at 82% 18%, var(--gradient-spot-2) 0, transparent 62%),
+      linear-gradient(140deg, var(--gradient-base-from) 0%, var(--gradient-base-to) 100%);
+  }
+  .app-bg::after { 
+    content: "";
+    position: fixed; inset:0; pointer-events:none; z-index:-1; mix-blend-mode:overlay;
+    background: linear-gradient(120deg, var(--gradient-accent-from), var(--gradient-accent-via) 55%, var(--gradient-accent-to));
+    opacity: .07; border-radius: inherit;
+  }
+  .dark .app-bg::after { opacity:.10; }
+  @supports (-webkit-touch-callout: none) {
+    .app-bg::before, .app-bg::after { position: absolute; }
+  }
+}

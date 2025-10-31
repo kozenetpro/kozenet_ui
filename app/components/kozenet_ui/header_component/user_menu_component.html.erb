@@ -1,0 +1,18 @@
+<%# frozen_string_literal: true %>
+<%# UserMenuComponent template for KozenetUi::HeaderComponent %>
+<div class="kz-user-menu relative" data-controller="kz-user-menu">
+  <button type="button" class="kz-avatar-btn flex items-center gap-2" data-action="click->kz-user-menu#toggle">
+    <% if @avatar_url.present? %>
+      <img src="<%= @avatar_url %>" alt="<%= @user_name %>" class="w-8 h-8 rounded-full" />
+    <% else %>
+      <span class="bg-gray-300 dark:bg-gray-700 w-8 h-8 rounded-full flex items-center justify-center font-bold">
+        <%= @user_name.to_s.first.upcase %>
+      </span>
+    <% end %>
+    <span class="kz-user-name"><%= @user_name %></span>
+    <svg class="ml-1 w-4 h-4" viewBox="0 0 20 20" fill="currentColor"><path d="M5.23 7.21a.75.75 0 0 1 1.06.02L10 11.06l3.71-3.83a.75.75 0 1 1 1.08 1.04l-4.25 4.39a.75.75 0 0 1-1.08 0L5.21 8.27a.75.75 0 0 1 .02-1.06z"/></svg>
+  </button>
+  <div class="kz-user-dropdown absolute right-0 mt-2 w-48 bg-white dark:bg-gray-900 rounded shadow-lg z-50 hidden" data-kz-user-menu-target="dropdown">
+    <%= content %>
+  </div>
+</div>
