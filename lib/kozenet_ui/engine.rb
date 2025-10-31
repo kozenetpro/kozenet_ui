@@ -25,17 +25,19 @@ module KozenetUi
     # Configure where to look for components
     config.view_component.preview_paths << "#{root}/spec/components/previews" if Rails.env.development?
 
-    # Add assets paths
-    config.assets.paths << root.join("app/assets/stylesheets")
-    config.assets.paths << root.join("app/assets/javascripts")
-    
-    # Precompile assets
-    config.assets.precompile += %w[
-      kozenet_ui/tokens.css
-      kozenet_ui/base.css
-      kozenet_ui/components.css
-      kozenet_ui/index.js
-    ]
+    # Add assets paths (for Rails 7/Sprockets only)
+    if config.respond_to?(:assets) && config.assets.respond_to?(:paths)
+      config.assets.paths << root.join("app/assets/stylesheets")
+      config.assets.paths << root.join("app/assets/javascripts")
+      
+      # Precompile assets
+      config.assets.precompile += %w[
+        kozenet_ui/tokens.css
+        kozenet_ui/base.css
+        kozenet_ui/components.css
+        kozenet_ui/index.js
+      ]
+    end
 
     # Auto-load components
     config.autoload_paths << root.join("app/components")
@@ -56,10 +58,11 @@ module KozenetUi
     end
 
     initializer "kozenet_ui.assets" do |app|
-      # Expose gem's stylesheets and icons to the asset pipeline
-      app.config.assets.paths << root.join("app/assets/stylesheets/kozenet_ui")
-      app.config.assets.paths << root.join("app/assets/stylesheets/kozenet_ui/components")
-      app.config.assets.paths << root.join("app/assets/images/kozenet_ui/icons")
+      if app.config.respond_to?(:assets) && app.config.assets.respond_to?(:paths)
+        app.config.assets.paths << root.join("app/assets/stylesheets/kozenet_ui")
+        app.config.assets.paths << root.join("app/assets/stylesheets/kozenet_ui/components")
+        app.config.assets.paths << root.join("app/assets/images/kozenet_ui/icons")
+      end
     end
   end
 
