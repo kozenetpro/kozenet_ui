@@ -25,5 +25,8 @@ jobs:
         with:
           ruby-version: ${{ matrix.ruby }}
           bundler-cache: true
+      - name: Generate dummy app for engine testing
+        run: |
+          bundle exec rails new spec/dummy --skip-test --skip-git --skip-bundle --skip-javascript --skip-hotwire --skip-action-mailer --skip-action-mailbox --skip-action-text --skip-active-record --skip-active-job --skip-active-storage --skip-action-cable --skip-jbuilder --skip-bootsnap --skip-keeps --skip-puma --skip-sprockets --skip-turbolinks --skip-spring --skip-listen --skip-coffee --skip-yarn --skip-webpack-install --skip-gemfile --skip-ci --skip-dev-gems
       - name: Run the default task
         run: bundle exec rake
