@@ -59,21 +59,21 @@ module KozenetUi
     end
 
     initializer "kozenet_ui.assets" do |app|
-      # Add all Kozenet UI asset paths for stylesheets and images
-      %w[
-        app/assets/stylesheets/kozenet_ui
-        app/assets/stylesheets/kozenet_ui/components
-        app/assets/images/kozenet_ui/icons
-      ].each do |path|
-        app.config.assets.paths << root.join(path)
+      # Only add asset paths and precompile for Sprockets (classic asset pipeline)
+      if app.config.respond_to?(:assets) && app.config.assets.respond_to?(:paths)
+        %w[
+          app/assets/stylesheets/kozenet_ui
+          app/assets/stylesheets/kozenet_ui/components
+          app/assets/images/kozenet_ui/icons
+        ].each do |path|
+          app.config.assets.paths << root.join(path)
+        end
+        app.config.assets.precompile += %w[
+          kozenet_ui/tokens.css
+          kozenet_ui/base.css
+          kozenet_ui/components.css
+        ]
       end
-
-      # Precompile Kozenet UI CSS files for all asset setups
-      app.config.assets.precompile += %w[
-        kozenet_ui/tokens.css
-        kozenet_ui/base.css
-        kozenet_ui/components.css
-      ]
     end
   end
 
