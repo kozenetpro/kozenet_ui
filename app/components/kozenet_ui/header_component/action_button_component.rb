@@ -22,7 +22,10 @@ module KozenetUi
       end
 
       def render_icon(icon)
-        ApplicationController.helpers.kozenet_ui_icon(icon, class: "kz-action-btn-icon") if icon
+        return unless icon
+
+        icon_name = icon.to_s.tr("_", "-").to_sym
+        ApplicationController.helpers.kozenet_ui_icon(icon_name, class: "kz-action-btn-icon")
       end
     end
   end

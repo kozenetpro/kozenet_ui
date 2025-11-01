@@ -62,5 +62,15 @@ RSpec.describe KozenetUi::HeaderComponent, type: :component do
 
     expect(page).to have_css("button.kz-mobile-trigger")
   end
+
+  it "renders heroicon directly" do
+    render_inline(described_class.new) do |header|
+      header.with_action_button(href: "/user", icon: :user_plus, label: "User")
+    end
+
+    expect(page).to have_css("a.kz-action-btn[href='/user']")
+    # Optionally, check for SVG or heroicon class
+    expect(page).to have_css("svg")
+  end
 end
 # rubocop:enable Metrics/BlockLength
