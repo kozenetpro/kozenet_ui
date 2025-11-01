@@ -5,6 +5,7 @@ require "rails/generators/base"
 module KozenetUi
   module Generators
     # Generator for installing Kozenet UI into a Rails application
+    # Copies stylesheets, creates initializer, and updates application CSS
     class InstallGenerator < Rails::Generators::Base
       source_root File.expand_path("templates", __dir__)
 
@@ -14,53 +15,130 @@ module KozenetUi
         template "kozenet_ui.rb", "config/initializers/kozenet_ui.rb"
       end
 
-      def copy_css_files_to_app
-        # do NOT copy CSS files to the app. Let the gem expose them via the asset pipeline.
-        say "Kozenet UI stylesheets are now available via the asset pipeline. " \
-            "Import them in your Tailwind/application.css:", :green
-        say "\n@import 'kozenet_ui/tokens.css';\n@import 'kozenet_ui/base.css';" \
-            "\n@import 'kozenet_ui/components.css';\n", :cyan
+      def copy_stylesheets
+        say "📦 Copying Kozenet UI stylesheets...", :blue
+        setup_directories
+        copy_main_stylesheets
+        copy_component_stylesheets
+        say "✅ Stylesheets copied successfully!", :green
       end
 
-      # rubocop:disable Metrics/MethodLength
       def add_stylesheets_to_application
-        tailwind_css = nil
-        tailwind_css = "app/assets/stylesheets/application.css" if File.exist?("app/assets/stylesheets/application.css")
+        css_file = find_application_css
+        return warn_no_css_file unless css_file
 
-        if tailwind_css
-          content = File.read(tailwind_css)
-          kozenet_imports = "\n/* Kozenet UI Styles */\n" \
-            "@import 'kozenet_ui/tokens.css';\n" \
-            "@import 'kozenet_ui/base.css';\n" \
-            "@import 'kozenet_ui/components.css';\n"
-
-          if content.include?("kozenet_ui/base.css")
-            say "File unchanged! Kozenet UI styles already present in #{tailwind_css}", :yellow
-          else
-            append_to_file tailwind_css, kozenet_imports
-            say "Appended Kozenet UI styles to #{tailwind_css}", :green
-          end
-        else
-          say "Could not find app/assets/stylesheets/application.css. " \
-              "Please manually import Kozenet UI stylesheets.", :yellow
-        end
+        update_css_file(css_file)
       end
-      # rubocop:enable Metrics/MethodLength
 
       def show_readme
-        say "\n✅ Kozenet UI installed successfully!", :green
-        say "\nNext steps:", :cyan
-        say "  1. Add <%= kozenet_ui_theme_variables_tag %> to your layout <head>"
-        say "  2. Customize colors in config/initializers/kozenet_ui.rb"
-        say "  3. Start using components: <%= kz_button { 'Click me' } %>"
-        say "\nDocumentation: https://github.com/kozenetpro/kozenet_ui\n"
+        display_success_message
       end
 
-      def install
-        create_initializer
-        copy_css_files_to_app
-        add_stylesheets_to_application
-        show_readme
+      private
+
+      def setup_directories
+        dest_dir = Rails.root.join("app/assets/stylesheets/kozenet_ui")
+        FileUtils.mkdir_p(dest_dir)
+        FileUtils.mkdir_p(dest_dir.join("components"))
+      end
+
+      def copy_main_stylesheets
+        %w[tokens.css base.css components.css].each do |file|
+          copy_stylesheet_file(file)
+        end
+      end
+
+      def copy_component_stylesheets
+        component_files = Dir.glob(File.join(gem_stylesheets_path, "components", "*.css"))
+        component_files.each { |src| copy_component_file(src) }
+      end
+
+      def copy_stylesheet_file(filename)
+        src = File.join(gem_stylesheets_path, filename)
+        dest = Rails.root.join("app/assets/stylesheets/kozenet_ui", filename)
+
+        if File.exist?(src)
+          FileUtils.cp(src, dest)
+          say "  ✓ Copied #{filename}", :green
+        else
+          say "  ✗ #{filename} not found!", :red
+        end
+      end
+
+      def copy_component_file(src_path)
+        filename = File.basename(src_path)
+        dest = Rails.root.join("app/assets/stylesheets/kozenet_ui/components", filename)
+        FileUtils.cp(src_path, dest)
+        say "  ✓ Copied components/#{filename}", :green
+      end
+
+      def gem_stylesheets_path
+        @gem_stylesheets_path ||= begin
+          gem_spec = Gem::Specification.find_by_name("kozenet_ui")
+          File.join(gem_spec.gem_dir, "app/assets/stylesheets/kozenet_ui")
+        end
+      end
+
+      def find_application_css
+        %w[
+          app/assets/stylesheets/application.tailwind.css
+          app/assets/stylesheets/application.css
+        ].find { |path| File.exist?(path) }
+      end
+
+      def update_css_file(css_file)
+        content = File.read(css_file)
+
+        if content.include?("kozenet_ui/base.css")
+          say "File unchanged! Kozenet UI styles already present", :yellow
+        else
+          append_to_file css_file, stylesheet_imports
+          say "✅ Added imports to #{css_file}", :green
+        end
+      end
+
+      def stylesheet_imports
+        <<~CSS
+
+          /* Kozenet UI Styles */
+          @import "kozenet_ui/tokens.css";
+          @import "kozenet_ui/base.css";
+          @import "kozenet_ui/components.css";
+        CSS
+      end
+
+      def warn_no_css_file
+        say "⚠️  Could not find application CSS file", :yellow
+        say "Add these imports manually:", :yellow
+        say stylesheet_imports.strip, :cyan
+      end
+
+      def display_success_message
+        say_header
+        say_next_steps
+        say_documentation
+      end
+
+      def say_header
+        say "\n#{"=" * 60}", :green
+        say "✅ Kozenet UI installed successfully!", :green
+        say ("=" * 60).to_s, :green
+      end
+
+      def say_next_steps
+        say "\nNext steps:", :cyan
+        say "  1. Add to layout <head>:", :white
+        say "     <%= kozenet_ui_theme_variables_tag %>", :yellow
+        say "\n  2. Restart server:", :white
+        say "     bin/dev", :yellow
+        say "\n  3. Use components:", :white
+        say "     <%= kz_button { 'Click me' } %>", :yellow
+        say "\n  4. Customize colors:", :white
+        say "     config/initializers/kozenet_ui.rb", :yellow
+      end
+
+      def say_documentation
+        say "\n📚 Documentation: https://github.com/kozenetpro/kozenet_ui\n\n", :blue
       end
     end
   end

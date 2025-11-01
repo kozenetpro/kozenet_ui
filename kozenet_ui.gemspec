@@ -10,9 +10,9 @@ Gem::Specification.new do |spec|
 
   spec.summary       = "Beautiful, minimal, Apple-inspired UI components for Rails"
   spec.description   = <<~DESC
-    Kozenet UI is a modern, production-ready component library for Ruby on Rails.#{" "}
-    Built with ViewComponent and Tailwind CSS, it provides beautiful, accessible,#{" "}
-    and customizable UI components with dynamic theming support. Features CSP-compliant#{" "}
+    Kozenet UI is a modern, production-ready component library for Ruby on Rails.
+    Built with ViewComponent and Tailwind CSS, it provides beautiful, accessible,
+    and customizable UI components with dynamic theming support. Features CSP-compliant
     styling, dark mode, and smooth animations.
   DESC
 
@@ -29,19 +29,15 @@ Gem::Specification.new do |spec|
     "rubygems_mfa_required" => "true"
   }
 
-  # Specify files more precisely to avoid duplicates
+  # Include all necessary files
   spec.files = Dir.chdir(File.expand_path(__dir__)) do
     Dir[
-      "lib/**/*",
-      "app/**/*",
+      "{lib,app}/**/*",
       "README.md",
       "LICENSE.txt",
       "CHANGELOG.md",
       "CODE_OF_CONDUCT.md"
-    ].reject do |f|
-      f.match(%r{^(test|spec|features)/}) ||
-        File.directory?(f)
-    end
+    ].select { |f| File.file?(f) }
   end
 
   spec.require_paths = ["lib"]

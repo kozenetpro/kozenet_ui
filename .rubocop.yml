@@ -18,3 +18,21 @@ Style/StringLiterals:
 
 Style/StringLiteralsInInterpolation:
   EnforcedStyle: double_quotes
+
+# Generators can have longer methods
+Metrics/MethodLength:
+  Exclude:
+    - 'lib/generators/**/*'
+
+Metrics/AbcSize:
+  Exclude:
+    - 'lib/generators/**/*'
+
+Metrics/ClassLength:
+  Exclude:
+    - 'lib/generators/kozenet_ui/install/install_generator.rb'
+
+# Style/Documentation:
+#   Exclude:
+#     - 'spec/**/*'
+#     - 'test/**/*'
