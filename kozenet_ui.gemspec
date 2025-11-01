@@ -45,6 +45,7 @@ Gem::Specification.new do |spec|
   # Runtime dependencies
   spec.add_dependency "color", "~> 1.8"
   spec.add_dependency "inline_svg", "~> 1.9"
+  spec.add_dependency "rails_heroicon", ">= 1.0"
   spec.add_dependency "railties", ">= 7.0", "< 9.0"
   spec.add_dependency "view_component", ">= 3.0", "< 4.0"
 
