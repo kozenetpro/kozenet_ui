@@ -1,21 +1,15 @@
-name: Ruby
+name: Kozenet UI CI
 
 on:
   push:
     branches:
       - master
-
   pull_request:
 
 jobs:
-  build:
+  ruby:
     runs-on: ubuntu-latest
-    name: Ruby ${{ matrix.ruby }}
-    strategy:
-      matrix:
-        ruby:
-          - '3.3.4'
-
+    name: Ruby CI
     steps:
       - uses: actions/checkout@v4
         with:
@@ -23,7 +17,21 @@ jobs:
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
         with:
-          ruby-version: ${{ matrix.ruby }}
+          ruby-version: '3.3.4'
+          bundler-cache: true
+
+  test:
+    runs-on: ubuntu-latest
+    name: Test CI
+    needs: ruby
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '3.3.4'
           bundler-cache: true
       - name: Generate dummy app for engine testing
         run: |
