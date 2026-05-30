@@ -28,15 +28,20 @@ module KozenetUi
 
     # Add assets paths (for Rails 7/Sprockets only)
     if config.respond_to?(:assets) && config.assets.respond_to?(:paths)
+      config.assets.paths << root.join("app/assets/fonts")
       config.assets.paths << root.join("app/assets/stylesheets")
       config.assets.paths << root.join("app/assets/javascripts")
 
       # Precompile assets
       config.assets.precompile += %w[
+        kozenet_ui/fonts.css
         kozenet_ui/tokens.css
         kozenet_ui/base.css
         kozenet_ui/components.css
         kozenet_ui/index.js
+        kozenet_ui/inter-latin.woff2
+        kozenet_ui/source-serif-4-latin.woff2
+        kozenet_ui/jetbrains-mono-latin.woff2
       ]
     end
 
@@ -64,14 +69,19 @@ module KozenetUi
         %w[
           app/assets/stylesheets/kozenet_ui
           app/assets/stylesheets/kozenet_ui/components
+          app/assets/fonts
           app/assets/images/kozenet_ui/icons
         ].each do |path|
           app.config.assets.paths << root.join(path)
         end
         app.config.assets.precompile += %w[
+          kozenet_ui/fonts.css
           kozenet_ui/tokens.css
           kozenet_ui/base.css
           kozenet_ui/components.css
+          kozenet_ui/inter-latin.woff2
+          kozenet_ui/source-serif-4-latin.woff2
+          kozenet_ui/jetbrains-mono-latin.woff2
         ]
       end
     end

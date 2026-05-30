@@ -43,7 +43,7 @@ module KozenetUi
       end
 
       def copy_main_stylesheets
-        %w[tokens.css base.css components.css].each do |file|
+        %w[tokens.css fonts.css base.css components.css].each do |file|
           copy_stylesheet_file(file)
         end
       end
@@ -102,6 +102,7 @@ module KozenetUi
 
           /* Kozenet UI Styles */
           @import "kozenet_ui/tokens.css";
+          @import "kozenet_ui/fonts.css";
           @import "kozenet_ui/base.css";
           @import "kozenet_ui/components.css";
         CSS

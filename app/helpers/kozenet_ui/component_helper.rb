@@ -28,7 +28,7 @@ module KozenetUi
 
     # Include theme styles in layout
     def kozenet_ui_stylesheet_tag
-      stylesheet_link_tag "kozenet_ui/tokens", "kozenet_ui/base", "kozenet_ui/components"
+      stylesheet_link_tag "kozenet_ui/tokens", "kozenet_ui/fonts", "kozenet_ui/base", "kozenet_ui/components"
     end
 
     # Include theme JavaScript
