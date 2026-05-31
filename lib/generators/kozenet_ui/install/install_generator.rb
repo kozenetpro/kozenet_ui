@@ -5,7 +5,7 @@ require "rails/generators/base"
 module KozenetUi
   module Generators
     # Generator for installing Kozenet UI into a Rails application
-      # Copies stylesheets, creates initializer, and adds runtime tags
+    # Copies stylesheets, creates initializer, and adds runtime tags
     class InstallGenerator < Rails::Generators::Base
       source_root File.expand_path("templates", __dir__)
 

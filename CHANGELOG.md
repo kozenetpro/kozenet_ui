@@ -1,5 +1,11 @@
 ## [Unreleased]
 
+## [0.1.7] - 2026-05-31
+
+- Fix: CI workflow now properly handles Rails 8.1.3 (commented out config.assets.quiet)
+- Fix: HeaderComponent test now properly validates Stimulus prefix with mobile menu
+- Improvement: Verified all 27 tests pass with Rails 8.1.3
+
 ## [0.1.5] - 2025-10-31
 
 - Feature: Robust icon helper now supports both heroicon and asset-based SVGs, with automatic fallback and variant/class support

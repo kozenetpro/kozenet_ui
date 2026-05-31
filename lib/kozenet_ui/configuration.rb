@@ -10,8 +10,8 @@ module KozenetUi
       }
     }.freeze
 
-    attr_accessor :palette, :default_variant, :default_size, :theme, :stimulus_prefix
-    attr_reader :component_defaults
+    attr_accessor :palette, :default_variant, :default_size, :theme
+    attr_reader :component_defaults, :stimulus_prefix
 
     def initialize
       @palette = Theme::Palette.new
@@ -50,7 +50,7 @@ module KozenetUi
     private
 
     def symbolize_keys(hash)
-      hash.to_h.transform_keys { |key| key.to_sym }
+      hash.to_h.transform_keys(&:to_sym)
     end
   end
 end

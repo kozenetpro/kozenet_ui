@@ -67,9 +67,7 @@ module KozenetUi
 
     # Inject inline theme variables (CSP-compliant)
     def kozenet_ui_theme_variables_tag
-      # rubocop:disable Rails/OutputSafety
       content_tag(:style, kozenet_ui_theme_variables, nonce: content_security_policy_nonce)
-      # rubocop:enable Rails/OutputSafety
     end
 
     def kozenet_ui_theme_variables

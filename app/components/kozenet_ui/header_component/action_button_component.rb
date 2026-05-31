@@ -21,8 +21,7 @@ module KozenetUi
         both: :always
       }.freeze
 
-      attr_reader :placement
-      attr_reader :visible_on
+      attr_reader :placement, :visible_on
 
       def initialize(
         href: "#",
@@ -70,7 +69,7 @@ module KozenetUi
       end
 
       def visible_text
-        @text.presence || (content if content.present?)
+        @text.presence || content.presence
       end
 
       def visible_text?
