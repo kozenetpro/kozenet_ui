@@ -24,7 +24,9 @@ module KozenetUi
     end
 
     # Configure where to look for components
-    config.view_component.preview_paths << "#{root}/spec/components/previews" if Rails.env.development?
+    if Rails.env.development? && config.view_component&.preview_paths
+      config.view_component.preview_paths << "#{root}/spec/components/previews"
+    end
 
     # Add assets paths (for Rails 7/Sprockets only)
     if config.respond_to?(:assets) && config.assets.respond_to?(:paths)

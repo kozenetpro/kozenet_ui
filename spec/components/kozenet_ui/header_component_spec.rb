@@ -95,7 +95,7 @@ RSpec.describe KozenetUi::HeaderComponent, type: :component do
 
   it "places action buttons in start or end groups" do
     render_inline(described_class.new) do |header|
-      header.with_action_button(href: "/menu", icon: :bars3, label: "Menu", placement: :start)
+      header.with_action_button(href: "/menu", icon: :bars_3, label: "Menu", placement: :start)
       header.with_action_button(href: "/saved", icon: :heart, label: "Saved")
     end
 
@@ -105,7 +105,7 @@ RSpec.describe KozenetUi::HeaderComponent, type: :component do
 
   it "accepts left and right action position aliases" do
     render_inline(described_class.new) do |header|
-      header.with_action_button(href: "/left", icon: :bars3, label: "Left", position: :left)
+      header.with_action_button(href: "/left", icon: :bars_3, label: "Left", position: :left)
       header.with_action_button(href: "/right", icon: :heart, label: "Right", position: :right)
     end
 
@@ -115,7 +115,7 @@ RSpec.describe KozenetUi::HeaderComponent, type: :component do
 
   it "renders action button visibility classes" do
     render_inline(described_class.new) do |header|
-      header.with_action_button(href: "/mobile", icon: :bars3, label: "Mobile", visible_on: :mobile)
+      header.with_action_button(href: "/mobile", icon: :bars_3, label: "Mobile", visible_on: :mobile)
       header.with_action_button(href: "/desktop", icon: :heart, label: "Desktop", visible_on: :desktop)
       header.with_action_button(href: "/always", icon: :bell, label: "Always", visible_on: :always)
     end

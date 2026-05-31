@@ -48,7 +48,7 @@ Gem::Specification.new do |spec|
   spec.add_dependency "rails_heroicon", ">= 2.3.0"
   spec.add_dependency "railties", ">= 7.0", "< 9.0"
   spec.add_dependency "stimulus-rails", ">= 1.3"
-  spec.add_dependency "view_component", ">= 3.0", "< 4.0"
+  spec.add_dependency "view_component", ">= 3.0", "< 5.0"
 
   # Development dependencies
   spec.add_development_dependency "bundler", ">= 2.0"
