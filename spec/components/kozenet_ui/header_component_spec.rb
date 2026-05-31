@@ -34,7 +34,9 @@ RSpec.describe KozenetUi::HeaderComponent, type: :component do
     original_prefix = KozenetUi.configuration.stimulus_prefix
     KozenetUi.configuration.stimulus_prefix = "ui"
 
-    render_inline(described_class.new)
+    render_inline(described_class.new) do |header|
+      header.with_mobile_menu { "Mobile nav" }
+    end
 
     expect(page).to have_css('header[data-controller="ui-header ui-mobile-nav"]')
     expect(page).to have_css('[data-ui-header-target="container"]')
