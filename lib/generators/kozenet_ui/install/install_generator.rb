@@ -5,7 +5,7 @@ require "rails/generators/base"
 module KozenetUi
   module Generators
     # Generator for installing Kozenet UI into a Rails application
-    # Copies stylesheets, creates initializer, and updates application CSS
+      # Copies stylesheets, creates initializer, and adds runtime tags
     class InstallGenerator < Rails::Generators::Base
       source_root File.expand_path("templates", __dir__)
 
@@ -24,10 +24,21 @@ module KozenetUi
       end
 
       def add_stylesheets_to_application
-        css_file = find_application_css
-        return warn_no_css_file unless css_file
+        say "Kozenet UI stylesheets will be loaded from kozenet_ui_head_tags", :blue
+      end
 
-        update_css_file(css_file)
+      def add_tags_to_layout
+        layout_file = find_application_layout
+        return warn_no_layout_file unless layout_file
+
+        update_layout_file(layout_file)
+      end
+
+      def add_importmap_pins
+        importmap_file = find_importmap_file
+        return unless importmap_file
+
+        update_importmap_file(importmap_file)
       end
 
       def show_readme
@@ -43,7 +54,7 @@ module KozenetUi
       end
 
       def copy_main_stylesheets
-        %w[tokens.css fonts.css base.css components.css].each do |file|
+        %w[tokens.css fonts.css base.css].each do |file|
           copy_stylesheet_file(file)
         end
       end
@@ -86,6 +97,16 @@ module KozenetUi
         ].find { |path| File.exist?(path) }
       end
 
+      def find_application_layout
+        %w[
+          app/views/layouts/application.html.erb
+        ].find { |path| File.exist?(path) }
+      end
+
+      def find_importmap_file
+        "config/importmap.rb" if File.exist?("config/importmap.rb")
+      end
+
       def update_css_file(css_file)
         content = File.read(css_file)
 
@@ -95,6 +116,64 @@ module KozenetUi
           append_to_file css_file, stylesheet_imports
           say "✅ Added imports to #{css_file}", :green
         end
+      end
+
+      def update_layout_file(layout_file)
+        content = File.read(layout_file)
+
+        if content.include?("kozenet_ui_head_tags")
+          say "Layout unchanged! Kozenet UI head tags already present", :yellow
+          return
+        end
+
+        remove_legacy_layout_tags(layout_file, content)
+        insert_layout_tags(layout_file)
+        say "✅ Added Kozenet UI runtime tags to #{layout_file}", :green
+      end
+
+      def remove_legacy_layout_tags(layout_file, content)
+        return unless content.match?(/kozenet_ui_(theme_variables|javascript)_tag/)
+
+        gsub_file layout_file, /^\s*<%=\s*kozenet_ui_theme_variables_tag\s*%>\n/, ""
+        gsub_file layout_file, /^\s*<%=\s*kozenet_ui_javascript_tag\s*%>\n/, ""
+      end
+
+      def insert_layout_tags(layout_file)
+        content = File.read(layout_file)
+        head_tags = layout_uses_app_stylesheet_bundle?(content) ? "kozenet_ui_head_tags(stylesheets: false)" : "kozenet_ui_head_tags"
+
+        if content.include?("javascript_importmap_tags")
+          insert_into_file(
+            layout_file,
+            "    <%= #{head_tags} %>\n",
+            after: /^\s*<%=\s*javascript_importmap_tags\s*%>\n/
+          )
+        else
+          insert_into_file layout_file, "    <%= #{head_tags} %>\n", before: %r{^\s*</head>}
+        end
+      end
+
+      def layout_uses_app_stylesheet_bundle?(content)
+        content.match?(/stylesheet_link_tag\s+:app\b/)
+      end
+
+      def update_importmap_file(importmap_file)
+        content = File.read(importmap_file)
+
+        if content.include?('pin "@hotwired/stimulus"')
+          say "Importmap unchanged! Stimulus is already pinned", :yellow
+        else
+          append_to_file importmap_file, stimulus_importmap_pin
+          say "✅ Added Stimulus importmap pin to #{importmap_file}", :green
+        end
+      end
+
+      def stimulus_importmap_pin
+        <<~RUBY
+
+          # Required by Kozenet UI JavaScript controllers
+          pin "@hotwired/stimulus", to: "stimulus.min.js"
+        RUBY
       end
 
       def stylesheet_imports
@@ -114,6 +193,12 @@ module KozenetUi
         say stylesheet_imports.strip, :cyan
       end
 
+      def warn_no_layout_file
+        say "⚠️  Could not find app/views/layouts/application.html.erb", :yellow
+        say "Add this once in your layout <head>, after javascript_importmap_tags when using importmap:", :yellow
+        say "<%= kozenet_ui_head_tags %>", :cyan
+      end
+
       def display_success_message
         say_header
         say_next_steps
@@ -128,13 +213,13 @@ module KozenetUi
 
       def say_next_steps
         say "\nNext steps:", :cyan
-        say "  1. Add to layout <head>:", :white
-        say "     <%= kozenet_ui_theme_variables_tag %>", :yellow
+        say "  1. Kozenet UI runtime is loaded once from your layout:", :white
+        say "     <%= kozenet_ui_head_tags %>", :yellow
         say "\n  2. Restart server:", :white
         say "     bin/dev", :yellow
         say "\n  3. Use components:", :white
         say "     <%= kz_button { 'Click me' } %>", :yellow
-        say "\n  4. Customize colors:", :white
+        say "\n  4. Customize colors and component defaults:", :white
         say "     config/initializers/kozenet_ui.rb", :yellow
       end
 

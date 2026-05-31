@@ -34,6 +34,9 @@ KozenetUi.configure do |config|
   # Theme mode: :light, :dark, or :system (follows OS/browser)
   # config.theme = :system
 
+  # Component defaults. Per-render options still take priority.
+  # config.component :header, sticky: true, blur: true
+
   # Stimulus controller prefix
   # config.stimulus_prefix = "kz"
 end

@@ -38,6 +38,11 @@ module KozenetUi
         kozenet_ui/tokens.css
         kozenet_ui/base.css
         kozenet_ui/components.css
+        kozenet_ui/components/avatar.css
+        kozenet_ui/components/badge.css
+        kozenet_ui/components/button.css
+        kozenet_ui/components/header.css
+        kozenet_ui/components/utilities.css
         kozenet_ui/index.js
         kozenet_ui/inter-latin.woff2
         kozenet_ui/source-serif-4-latin.woff2
@@ -70,7 +75,6 @@ module KozenetUi
           app/assets/stylesheets/kozenet_ui
           app/assets/stylesheets/kozenet_ui/components
           app/assets/fonts
-          app/assets/images/kozenet_ui/icons
         ].each do |path|
           app.config.assets.paths << root.join(path)
         end
@@ -79,6 +83,11 @@ module KozenetUi
           kozenet_ui/tokens.css
           kozenet_ui/base.css
           kozenet_ui/components.css
+          kozenet_ui/components/avatar.css
+          kozenet_ui/components/badge.css
+          kozenet_ui/components/button.css
+          kozenet_ui/components/header.css
+          kozenet_ui/components/utilities.css
           kozenet_ui/inter-latin.woff2
           kozenet_ui/source-serif-4-latin.woff2
           kozenet_ui/jetbrains-mono-latin.woff2
@@ -128,7 +137,7 @@ module KozenetUi
           }
 
           @media (prefers-color-scheme: dark) {
-            :root:not([data-theme="light"]) {
+            :root:not([data-theme="light"]):not(.light) {
               color-scheme: dark;
               /* Color Palette (Dark Mode) */
               #{dark_palette}

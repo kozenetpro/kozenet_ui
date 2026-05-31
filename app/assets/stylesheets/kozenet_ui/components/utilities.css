@@ -1,4 +1,48 @@
 @layer components {
+  .hidden {
+    display: none !important;
+  }
+
+  .block {
+    display: block !important;
+  }
+
+  .inline-flex {
+    display: inline-flex;
+  }
+
+  .flex {
+    display: flex;
+  }
+
+  .items-center {
+    align-items: center;
+  }
+
+  .justify-center {
+    justify-content: center;
+  }
+
+  .gap-1 {
+    gap: 0.25rem;
+  }
+
+  .gap-2 {
+    gap: 0.5rem;
+  }
+
+  .origin-top {
+    transform-origin: top center;
+  }
+
+  .scale-y-0 {
+    transform: scaleY(0);
+  }
+
+  .scale-y-100 {
+    transform: scaleY(1);
+  }
+
   /* Layout utilities */
   .container-fluid { 
     width: 100%; 
@@ -194,6 +238,13 @@
   .dark .glass-panel {
     background: rgba(0, 0, 0, 0.2);
     border-color: rgba(255, 255, 255, 0.1);
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]):not(.light) .glass-panel {
+      background: rgba(0, 0, 0, 0.2);
+      border-color: rgba(255, 255, 255, 0.1);
+    }
   }
 
   /* Play surface (gradient background) */

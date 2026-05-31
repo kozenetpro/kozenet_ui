@@ -135,7 +135,7 @@
   }
 
   @media (prefers-color-scheme: dark) {
-    :root:not([data-theme="light"]) {
+    :root:not([data-theme="light"]):not(.light) {
       color-scheme: dark;
       --kz-bg-base: #101318;
       --kz-bg-default: var(--kz-bg-base);
@@ -209,36 +209,57 @@
   body { background: var(--bg-default); color: var(--text-default); font-family: var(--font-sans, ui-sans-serif, system-ui, sans-serif); }
   * { border-color: var(--border-default); }
   ::selection { background: var(--bg-accent); color: #fff; }
-  .app-bg { 
-    position: relative;
-    min-height: 100vh;
-    overflow-x: hidden;
-    isolation: isolate;
+}
+
+/* ── App Background Utility ────────────────────────────────────────────
+ * Lives OUTSIDE @layer so its resets always beat browser defaults and
+ * un-layered host-app CSS (e.g. Rails' default `body { margin: 8px }`).
+ * This is intentional: .app-bg is an opt-in utility, and when a consumer
+ * applies it to <body>, it must guarantee zero margin/padding so that
+ * sticky headers, full-bleed sections, etc. work edge-to-edge.
+ * ──────────────────────────────────────────────────────────────────── */
+.app-bg {
+  position: relative;
+  overflow-x: hidden;
+  isolation: isolate;
+  margin: 0;
+  padding: 0;
+}
+
+.app-bg:not(:first-of-type) { background: none !important; }
+
+.app-bg::before {
+  content: "";
+  position: fixed; inset: 0; pointer-events: none; z-index: -1;
+  background:
+    radial-gradient(circle at 18% 22%, var(--gradient-spot-1) 0, transparent 60%),
+    radial-gradient(circle at 82% 18%, var(--gradient-spot-2) 0, transparent 62%),
+    linear-gradient(135deg, var(--gradient-base-from) 0%, var(--gradient-base-to) 100%);
+  background-attachment: fixed;
+}
+
+.dark .app-bg::before {
+  background:
+    radial-gradient(circle at 18% 22%, var(--gradient-spot-1) 0, transparent 60%),
+    radial-gradient(circle at 82% 18%, var(--gradient-spot-2) 0, transparent 62%),
+    linear-gradient(140deg, var(--gradient-base-from) 0%, var(--gradient-base-to) 100%);
+}
+
+.app-bg::after {
+  content: "";
+  position: fixed; inset: 0; pointer-events: none; z-index: -1; mix-blend-mode: overlay;
+  background: linear-gradient(120deg, var(--gradient-accent-from), var(--gradient-accent-via) 55%, var(--gradient-accent-to));
+  opacity: .07; border-radius: inherit;
+}
+
+.dark .app-bg::after { opacity: .10; }
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]):not(.light) .app-bg::after {
+    opacity: .10;
   }
-  .app-bg:not(:first-of-type) { background: none !important; }
-  .app-bg::before { 
-    content: "";
-    position: fixed; inset:0; pointer-events:none; z-index:-1;
-    background:
-      radial-gradient(circle at 18% 22%, var(--gradient-spot-1) 0, transparent 60%),
-      radial-gradient(circle at 82% 18%, var(--gradient-spot-2) 0, transparent 62%),
-      linear-gradient(135deg, var(--gradient-base-from) 0%, var(--gradient-base-to) 100%);
-    background-attachment: fixed;
-  }
-  .dark .app-bg::before {
-    background:
-      radial-gradient(circle at 18% 22%, var(--gradient-spot-1) 0, transparent 60%),
-      radial-gradient(circle at 82% 18%, var(--gradient-spot-2) 0, transparent 62%),
-      linear-gradient(140deg, var(--gradient-base-from) 0%, var(--gradient-base-to) 100%);
-  }
-  .app-bg::after { 
-    content: "";
-    position: fixed; inset:0; pointer-events:none; z-index:-1; mix-blend-mode:overlay;
-    background: linear-gradient(120deg, var(--gradient-accent-from), var(--gradient-accent-via) 55%, var(--gradient-accent-to));
-    opacity: .07; border-radius: inherit;
-  }
-  .dark .app-bg::after { opacity:.10; }
-  @supports (-webkit-touch-callout: none) {
-    .app-bg::before, .app-bg::after { position: absolute; }
-  }
+}
+
+@supports (-webkit-touch-callout: none) {
+  .app-bg::before, .app-bg::after { position: absolute; }
 }

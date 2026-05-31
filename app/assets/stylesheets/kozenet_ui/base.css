@@ -2,6 +2,11 @@
 
 @layer base {
   /* Reset and base improvements */
+  html, body {
+    margin: 0;
+    padding: 0;
+  }
+
   *,
   *::before,
   *::after {

@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 require_relative "kozenet_ui/version"
+require "rails_heroicon"
+require "rails_heroicon/helper"
 require_relative "kozenet_ui/engine"
 require_relative "kozenet_ui/configuration"
 require_relative "kozenet_ui/theme/tokens"

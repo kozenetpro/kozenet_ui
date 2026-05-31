@@ -23,6 +23,12 @@ module KozenetUi
         classes << @custom_class if defined?(@custom_class) && @custom_class
         classes.join(" ")
       end
+
+      def nav_item_data
+        return {} unless @dropdown
+
+        { action: stimulus_action(:dropdown, :toggle, event: :click) }
+      end
     end
   end
 end

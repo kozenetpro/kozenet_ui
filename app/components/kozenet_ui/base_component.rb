@@ -4,6 +4,8 @@ module KozenetUi
   # Base component that all Kozenet UI components inherit from
   # Provides common functionality for variant handling, class merging, etc.
   class BaseComponent < ViewComponent::Base
+    UNSET = Object.new.freeze
+
     attr_reader :variant, :size, :html_options
 
     def initialize(variant: nil, size: nil, class: nil, **html_options)
@@ -78,7 +80,25 @@ module KozenetUi
 
     # Stimulus controller name with prefix
     def stimulus_controller(name)
-      "#{KozenetUi.configuration.stimulus_prefix}-#{name}"
+      "#{KozenetUi.configuration.stimulus_prefix}-#{name.to_s.tr("_", "-")}"
+    end
+
+    def stimulus_controllers(*names)
+      names.map { |name| stimulus_controller(name) }.join(" ")
+    end
+
+    def stimulus_action(controller, action, event:)
+      "#{event}->#{stimulus_controller(controller)}##{action}"
+    end
+
+    def stimulus_target(controller, target)
+      { "data-#{stimulus_controller(controller)}-target" => target.to_s.tr("_", "-") }
+    end
+
+    def component_option(component, option, value = UNSET, fallback: nil)
+      return value unless value.equal?(UNSET)
+
+      KozenetUi.configuration.component_defaults_for(component).fetch(option.to_sym, fallback)
     end
   end
 end

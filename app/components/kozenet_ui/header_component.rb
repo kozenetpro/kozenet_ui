@@ -19,13 +19,13 @@ module KozenetUi
     renders_one :mobile_menu
 
     def initialize(
-      sticky: true,
-      blur: true,
+      sticky: BaseComponent::UNSET,
+      blur: BaseComponent::UNSET,
       **html_options
     )
       super(**html_options)
-      @sticky = sticky
-      @blur = blur
+      @sticky = component_option(:header, :sticky, sticky, fallback: true)
+      @blur = component_option(:header, :blur, blur, fallback: true)
     end
 
     private
@@ -35,6 +35,28 @@ module KozenetUi
       classes << "kz-header-sticky" if @sticky
       classes << "kz-header-blur" if @blur
       classes.join(" ")
+    end
+
+    def start_action_buttons
+      action_buttons_for(:start)
+    end
+
+    def start_action_buttons?
+      start_action_buttons.any?
+    end
+
+    def end_action_buttons
+      action_buttons_for(:end)
+    end
+
+    def end_action_buttons?
+      end_action_buttons.any?
+    end
+
+    def action_buttons_for(placement)
+      return [] unless action_buttons?
+
+      action_buttons.select { |button| button.placement == placement }
     end
   end
 end

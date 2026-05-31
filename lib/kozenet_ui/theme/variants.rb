@@ -19,6 +19,7 @@ module KozenetUi
       BADGE = {
         primary: "kz-badge-primary",
         secondary: "kz-badge-secondary",
+        accent: "kz-badge-accent",
         success: "kz-badge-success",
         warning: "kz-badge-warning",
         error: "kz-badge-error",

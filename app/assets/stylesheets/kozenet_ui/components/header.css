@@ -14,16 +14,16 @@
   .kz-header.kz-header-blur {
     backdrop-filter: blur(28px) saturate(1.4);
     -webkit-backdrop-filter: blur(28px) saturate(1.4);
-    background: linear-gradient(135deg, 
-      rgba(245, 247, 250, 0.88), 
+    background: linear-gradient(135deg,
+      rgba(245, 247, 250, 0.88),
       rgba(240, 243, 247, 0.82)
     );
     border-bottom: 1px solid rgba(0, 0, 0, 0.06);
   }
 
   .dark .kz-header.kz-header-blur {
-    background: linear-gradient(135deg, 
-      rgba(15, 18, 24, 0.85), 
+    background: linear-gradient(135deg,
+      rgba(15, 18, 24, 0.85),
       rgba(20, 24, 30, 0.82)
     );
     border-color: rgba(255, 255, 255, 0.06);
@@ -36,6 +36,8 @@
     margin-right: auto;
     padding-left: 1rem;
     padding-right: 1rem;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
     height: 78px;
     display: grid;
     grid-template-columns: auto 1fr auto;
@@ -53,9 +55,18 @@
 
   /* Left section (brand + nav) */
   .kz-header-start {
+    grid-column: 1;
     display: flex;
     align-items: center;
     gap: 1rem;
+    min-width: 0;
+  }
+
+  .kz-header-start-actions {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    flex: 0 0 auto;
   }
 
   /* Brand */
@@ -63,6 +74,8 @@
     display: flex;
     align-items: center;
     gap: 0.625rem;
+    min-width: 0;
+    max-width: 100%;
     font-weight: 600;
     font-size: 1.125rem;
     text-decoration: none;
@@ -74,13 +87,15 @@
   .kz-brand img {
     height: 44px;
     width: auto;
+    max-width: min(220px, 48vw);
+    object-fit: contain;
     display: block;
   }
 
   .kz-brand .accent {
-    background: linear-gradient(110deg, 
-      rgb(var(--kz-primary-500) / 1), 
-      rgb(var(--kz-accent-500) / 1) 55%, 
+    background: linear-gradient(110deg,
+      rgb(var(--kz-primary-500) / 1),
+      rgb(var(--kz-accent-500) / 1) 55%,
       rgb(var(--kz-accent-400) / 1)
     );
     -webkit-background-clip: text;
@@ -129,8 +144,10 @@
 
   /* Search */
   .kz-search-col {
+    grid-column: 2;
     display: none;
     display: block;
+    min-width: 0;
   }
 
   .kz-search-wrap {
@@ -139,8 +156,8 @@
     align-items: center;
     height: 48px;
     border-radius: 18px;
-    background: linear-gradient(135deg, 
-      rgba(255, 255, 255, 0.75), 
+    background: linear-gradient(135deg,
+      rgba(255, 255, 255, 0.75),
       rgba(255, 255, 255, 0.55)
     );
     border: 1px solid rgba(0, 0, 0, 0.06);
@@ -149,8 +166,8 @@
   }
 
   .dark .kz-search-wrap {
-    background: linear-gradient(135deg, 
-      rgba(255, 255, 255, 0.1), 
+    background: linear-gradient(135deg,
+      rgba(255, 255, 255, 0.1),
       rgba(255, 255, 255, 0.06)
     );
     border-color: rgba(255, 255, 255, 0.08);
@@ -182,6 +199,8 @@
 
   /* Actions */
   .kz-header-actions {
+    grid-column: 3;
+    justify-self: end;
     display: flex;
     align-items: center;
     gap: 0.5rem;
@@ -194,8 +213,8 @@
     width: 46px;
     height: 46px;
     border-radius: var(--kz-radius-md);
-    background: linear-gradient(135deg, 
-      rgba(255, 255, 255, 0.65), 
+    background: linear-gradient(135deg,
+      rgba(255, 255, 255, 0.65),
       rgba(255, 255, 255, 0.5)
     );
     border: 1px solid rgba(0, 0, 0, 0.05);
@@ -203,26 +222,78 @@
     transition: var(--kz-transition-base);
   }
 
+  .kz-action-btn-with-text {
+    width: auto;
+    min-width: 46px;
+    gap: 0.45rem;
+    padding-left: 0.85rem;
+    padding-right: 0.95rem;
+    font-size: 0.78rem;
+    font-weight: var(--kz-font-weight-semibold);
+    text-decoration: none;
+    white-space: nowrap;
+  }
+
+  .kz-action-visible-mobile {
+    display: none;
+  }
+
   .kz-action-btn:hover {
-    background: linear-gradient(135deg, 
-      rgba(255, 255, 255, 0.9), 
+    background: linear-gradient(135deg,
+      rgba(255, 255, 255, 0.9),
       rgba(255, 255, 255, 0.75)
     );
     color: var(--kz-text-default);
     transform: translateY(-2px);
   }
 
+  .kz-action-btn-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 1.25rem;
+    height: 1.25rem;
+    line-height: 0;
+    flex: 0 0 auto;
+  }
+
+  .kz-action-btn-svg {
+    display: block;
+    width: 1.25rem;
+    height: 1.25rem;
+    overflow: visible;
+  }
+
+  .kz-action-btn-label {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+  }
+
+  .kz-action-btn-text {
+    display: inline-flex;
+    align-items: center;
+    line-height: 1;
+  }
+
+  .kz-header .md\:hidden {
+    display: none;
+  }
+
   .dark .kz-action-btn {
-    background: linear-gradient(135deg, 
-      rgba(255, 255, 255, 0.12), 
+    background: linear-gradient(135deg,
+      rgba(255, 255, 255, 0.12),
       rgba(255, 255, 255, 0.08)
     );
     border-color: rgba(255, 255, 255, 0.1);
   }
 
   .dark .kz-action-btn:hover {
-    background: linear-gradient(135deg, 
-      rgba(255, 255, 255, 0.18), 
+    background: linear-gradient(135deg,
+      rgba(255, 255, 255, 0.18),
       rgba(255, 255, 255, 0.12)
     );
   }
@@ -254,8 +325,8 @@
     height: 46px;
     border-radius: var(--kz-radius-md);
     overflow: hidden;
-    background: linear-gradient(135deg, 
-      rgba(255, 255, 255, 0.65), 
+    background: linear-gradient(135deg,
+      rgba(255, 255, 255, 0.65),
       rgba(255, 255, 255, 0.5)
     );
     border: 1px solid rgba(0, 0, 0, 0.05);
@@ -265,9 +336,32 @@
     justify-content: center;
   }
 
+  .kz-avatar-btn img {
+    width: 2rem;
+    height: 2rem;
+    border-radius: 999px;
+    object-fit: cover;
+  }
+
+  .kz-user-menu {
+    position: relative;
+  }
+
+  .kz-user-initial {
+    width: 2rem;
+    height: 2rem;
+    border-radius: 999px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: var(--kz-font-weight-bold);
+    background: var(--kz-cta-gradient);
+    color: var(--kz-cta-text);
+  }
+
   .dark .kz-avatar-btn {
-    background: linear-gradient(135deg, 
-      rgba(255, 255, 255, 0.12), 
+    background: linear-gradient(135deg,
+      rgba(255, 255, 255, 0.12),
       rgba(255, 255, 255, 0.08)
     );
     border-color: rgba(255, 255, 255, 0.1);
@@ -285,8 +379,8 @@
     right: 0;
     top: 78px;
     padding: 1rem 1rem 1.25rem;
-    background: linear-gradient(135deg, 
-      rgba(245, 247, 250, 0.95), 
+    background: linear-gradient(135deg,
+      rgba(245, 247, 250, 0.95),
       rgba(240, 243, 247, 0.9)
     );
     backdrop-filter: blur(26px) saturate(1.4);
@@ -301,8 +395,8 @@
   }
 
   .dark .kz-mobile-panel {
-    background: linear-gradient(135deg, 
-      rgba(15, 18, 24, 0.95), 
+    background: linear-gradient(135deg,
+      rgba(15, 18, 24, 0.95),
       rgba(20, 24, 30, 0.9)
     );
     border-color: rgba(255, 255, 255, 0.06);
@@ -317,8 +411,8 @@
     min-width: 220px;
     padding: 0.55rem 0.55rem 0.7rem;
     border-radius: 18px;
-    background: linear-gradient(135deg, 
-      rgba(255, 255, 255, 0.9), 
+    background: linear-gradient(135deg,
+      rgba(255, 255, 255, 0.9),
       rgba(255, 255, 255, 0.75)
     );
     backdrop-filter: blur(26px) saturate(1.4);
@@ -327,9 +421,13 @@
     animation: fadeIn 0.28s ease;
   }
 
+  .kz-user-dropdown.hidden {
+    display: none;
+  }
+
   .dark .kz-user-dropdown {
-    background: linear-gradient(135deg, 
-      rgba(20, 24, 30, 0.92), 
+    background: linear-gradient(135deg,
+      rgba(20, 24, 30, 0.92),
       rgba(18, 22, 28, 0.88)
     );
     border-color: rgba(255, 255, 255, 0.08);
@@ -351,15 +449,59 @@
     .kz-nav-links {
       display: none;
     }
-    
+
     .kz-search-col {
       display: none;
+    }
+
+    .kz-action-visible-desktop {
+      display: none;
+    }
+
+    .kz-action-visible-mobile {
+      display: inline-flex;
+    }
+
+    .kz-mobile-trigger {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 46px;
+      height: 46px;
+      border-radius: var(--kz-radius-md);
+      background: color-mix(in srgb, var(--kz-bg-elevated) 78%, transparent);
+      border: 1px solid var(--kz-border-default);
+      color: var(--kz-text-default);
+    }
+
+    .kz-header .md\:hidden {
+      display: inline-flex;
     }
   }
 
   @media (max-width: 640px) {
     .kz-header-bar {
       grid-template-columns: 1fr auto;
+      gap: 0.75rem;
+    }
+
+    .kz-header-start {
+      grid-column: 1;
+      gap: 0.65rem;
+    }
+
+    .kz-header-actions {
+      grid-column: 2;
+    }
+
+    .kz-brand {
+      padding-left: 0.25rem;
+      padding-right: 0.25rem;
+    }
+
+    .kz-brand img {
+      height: 40px;
+      max-width: min(180px, 46vw);
     }
   }
 
@@ -369,17 +511,64 @@
     .kz-cta:hover {
       transform: none;
     }
-    
+
     .kz-mobile-panel {
       transition: none;
     }
   }
 
   @media (prefers-color-scheme: dark) {
-    :root {
-      color-scheme: dark;
-      --kz-cta-gradient: var(--kz-cta-gradient-dark);
-      --kz-cta-text: var(--kz-cta-text-dark);
+    :root:not([data-theme="light"]):not(.light) .kz-header.kz-header-blur {
+      background: linear-gradient(135deg,
+        rgba(15, 18, 24, 0.85),
+        rgba(20, 24, 30, 0.82)
+      );
+      border-color: rgba(255, 255, 255, 0.06);
+    }
+
+    :root:not([data-theme="light"]):not(.light) .kz-nav-link:hover {
+      background: rgba(255, 255, 255, 0.08);
+    }
+
+    :root:not([data-theme="light"]):not(.light) .kz-search-wrap {
+      background: linear-gradient(135deg,
+        rgba(255, 255, 255, 0.1),
+        rgba(255, 255, 255, 0.06)
+      );
+      border-color: rgba(255, 255, 255, 0.08);
+    }
+
+    :root:not([data-theme="light"]):not(.light) .kz-action-btn,
+    :root:not([data-theme="light"]):not(.light) .kz-avatar-btn {
+      background: linear-gradient(135deg,
+        rgba(255, 255, 255, 0.12),
+        rgba(255, 255, 255, 0.08)
+      );
+      border-color: rgba(255, 255, 255, 0.1);
+    }
+
+    :root:not([data-theme="light"]):not(.light) .kz-action-btn:hover {
+      background: linear-gradient(135deg,
+        rgba(255, 255, 255, 0.18),
+        rgba(255, 255, 255, 0.12)
+      );
+    }
+
+    :root:not([data-theme="light"]):not(.light) .kz-mobile-panel {
+      background: linear-gradient(135deg,
+        rgba(15, 18, 24, 0.95),
+        rgba(20, 24, 30, 0.9)
+      );
+      border-color: rgba(255, 255, 255, 0.06);
+      box-shadow: 0 24px 60px -26px rgba(0, 0, 0, 0.8);
+    }
+
+    :root:not([data-theme="light"]):not(.light) .kz-user-dropdown {
+      background: linear-gradient(135deg,
+        rgba(20, 24, 30, 0.92),
+        rgba(18, 22, 28, 0.88)
+      );
+      border-color: rgba(255, 255, 255, 0.08);
     }
   }
 }

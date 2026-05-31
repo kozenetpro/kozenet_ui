@@ -6,50 +6,114 @@ Beautiful, minimal, Apple-inspired UI components for Rails.
 
 ## Installation
 
-Add to your Gemfile:
+For local gem development, point the Rails app at this checkout:
 
 ```ruby
-gem "kozenet_ui", github: "kozenetpro/kozenet_ui"
+gem "kozenet_ui", path: "../.."
 ```
 
 Then run:
 
 ```bash
 bundle install
+bin/rails generate kozenet_ui:install
 ```
 
-If you want to use a released version from RubyGems.org (after release):
+For an app outside this repository, use GitHub:
+
+```ruby
+gem "kozenet_ui", github: "kozenetpro/kozenet_ui"
+```
+
+Or use the released RubyGems version:
 
 ```bash
 bundle add kozenet_ui
 ```
 
-Or:
+Then run:
 
 ```bash
-gem install kozenet_ui
+bin/rails generate kozenet_ui:install
 ```
+
+`gem install kozenet_ui` is not enough for a Rails app. The app must have
+`kozenet_ui` in its `Gemfile`, because Rails generators are loaded through
+Bundler.
 
 ## Usage in your Rails app
 
-1. **Add the theme variables tag to your layout `<head>`:**
+Usage guides live in [docs](docs/README.md):
+
+- [Components](docs/components/README.md)
+- [Fonts](docs/foundations/fonts.md)
+
+1. **Load Kozenet UI once from your layout `<head>`:**
    ```erb
-   <%= kozenet_ui_theme_variables_tag %>
+   <%= kozenet_ui_head_tags %>
    ```
 
-2. **Import Kozenet UI styles in your main application.css:**
+   This loads digested CSS assets, theme variables, and JavaScript. When using
+   importmap, keep this after `javascript_importmap_tags`.
+
+   In Rails 8 apps using `stylesheet_link_tag :app`, the install generator
+   copies Kozenet UI styles into `app/assets/stylesheets/kozenet_ui` and inserts:
+
+   ```erb
+   <%= kozenet_ui_head_tags(stylesheets: false) %>
+   ```
+
+2. **Customize copied styles when needed:**
+   The install generator copies Kozenet UI CSS into
+   `app/assets/stylesheets/kozenet_ui`, so developers can edit the frontend
+   without touching gem internals.
+
+3. **Only use CSS imports when you have a CSS bundler:**
    ```css
    @import "kozenet_ui/tokens.css";
+   @import "kozenet_ui/fonts.css";
    @import "kozenet_ui/base.css";
-   @import "kozenet_ui/components.css";
+   @import "kozenet_ui/components/button.css";
+   @import "kozenet_ui/components/header.css";
+   @import "kozenet_ui/components/avatar.css";
+   @import "kozenet_ui/components/badge.css";
+   @import "kozenet_ui/components/utilities.css";
    ```
 
-3. **(Optional) Override icons:**
-   Place your own SVGs in `app/assets/images/icons/` to override the gem's icons.
+   For plain Propshaft/Sprockets apps, prefer `kozenet_ui_head_tags`, because
+   stylesheet tags generate digest-safe production asset URLs.
 
-4. **Customize colors in `config/initializers/kozenet_ui.rb`.**
+4. **Skip direct stylesheet tags if your app bundles the CSS itself:**
+   ```erb
+   <%= kozenet_ui_head_tags(stylesheets: false) %>
+   ```
 
-5. **Use components in your views:**
+5. **Use Heroicons by name:**
+   ```erb
+   <% header.with_action_button(href: "/saved", icon: :heart, label: "Saved") %>
+   <% header.with_action_button(href: "/cart", icon: :shopping_cart, label: "Cart") %>
+   ```
+
+   Kozenet UI normalizes Ruby-style names like `:shopping_cart` to Heroicons'
+   `shopping-cart` name.
+
+6. **Customize colors and component defaults in `config/initializers/kozenet_ui.rb`:**
+   ```ruby
+   KozenetUi.configure do |config|
+     config.theme = :system
+     config.stimulus_prefix = "kz"
+     config.component :header, sticky: true, blur: true
+   end
+   ```
+
+   Per-render options still win:
+   ```erb
+   <%= kz_header(sticky: false) do |header| %>
+     ...
+   <% end %>
+   ```
+
+7. **Use components in your views:**
    ```erb
    <%= render KozenetUi::HeaderComponent.new do |header| %>
      ...

@@ -2,6 +2,9 @@
   /* Avatar base */
   .kz-avatar {
     position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
     flex-shrink: 0;
     border-radius: var(--kz-radius-md);
     background: linear-gradient(135deg, #6366f1, #0ea5e9);

@@ -1,6 +1,9 @@
 @layer components {
   /* Badge base */
   .kz-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
     border-radius: var(--kz-radius-sm);
     font-weight: var(--kz-font-weight-bold);
     letter-spacing: 0.05em;
@@ -45,6 +48,13 @@
     background: linear-gradient(120deg, #8b5cf6, #a855f7);
     color: white;
     box-shadow: 0 2px 8px -2px rgba(139, 92, 246, 0.4);
+  }
+
+  .kz-badge.kz-badge-accent,
+  .kz-badge.kz-variant-accent {
+    background: linear-gradient(120deg, #06b6d4, #0891b2);
+    color: white;
+    box-shadow: 0 2px 8px -2px rgba(6, 182, 212, 0.4);
   }
 
   .kz-badge.kz-badge-success,
