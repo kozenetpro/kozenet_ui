@@ -89,7 +89,6 @@ module KozenetUi
           variables << "--gradient-accent-from: #{@colors[:gradient_accent_from] || "#6366f1"};"
           variables << "--gradient-accent-via: #{@colors[:gradient_accent_via] || "#0ea5e9"};"
           variables << "--gradient-accent-to: #{@colors[:gradient_accent_to] || "#06b6d4"};"
-          # rubocop:disable Naming/VariableNumber
           variables << "--gradient-spot-1: #{@colors[:gradient_spot_1] || "rgba(99,102,241,0.35)"};"
           variables << "--gradient-spot-2: #{@colors[:gradient_spot_2] || "rgba(14,165,233,0.30)"};"
           # rubocop:enable Naming/VariableNumber

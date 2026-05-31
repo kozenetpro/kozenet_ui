@@ -6,7 +6,8 @@ module KozenetUi
     # Renders an action button (icon or text) in the header
     #
     # @example
-    #   <%= render KozenetUi::HeaderComponent::ActionButtonComponent.new(href: "/cart", icon: :shopping_cart, label: "Cart") %>
+    #   <%= render KozenetUi::HeaderComponent::ActionButtonComponent.new(href:
+    #  "/cart", icon: :shopping_cart, label: "Cart") %>
     class ActionButtonComponent < BaseComponent
       PLACEMENTS = %i[start end].freeze
       PLACEMENT_ALIASES = {

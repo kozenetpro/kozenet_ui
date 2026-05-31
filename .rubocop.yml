@@ -19,7 +19,16 @@ Style/StringLiterals:
 Style/StringLiteralsInInterpolation:
   EnforcedStyle: double_quotes
 
-# Generators can have longer methods
+# Disable naming rule that conflicts with Heroicon symbol naming (bars_3 is correct API)
+Naming/VariableNumber:
+  Enabled: false
+
+# Allow long parameter lists for components that need many options
+Metrics/ParameterLists:
+  Exclude:
+    - 'app/components/kozenet_ui/header_component/action_button_component.rb'
+
+# Generators can have longer methods and lines
 Metrics/MethodLength:
   Exclude:
     - 'lib/generators/**/*'
@@ -31,6 +40,22 @@ Metrics/AbcSize:
 Metrics/ClassLength:
   Exclude:
     - 'lib/generators/kozenet_ui/install/install_generator.rb'
+    - 'lib/kozenet_ui/theme/palette.rb'
+
+Metrics/ModuleLength:
+  Exclude:
+    # ComponentHelper provides essential rendering methods for all Kozenet UI components
+    - 'app/helpers/kozenet_ui/component_helper.rb'
+
+Layout/LineLength:
+  Exclude:
+    - 'lib/generators/**/*'
+
+# html_safe is needed for CSS generation
+Rails/OutputSafety:
+  Exclude:
+    - 'app/helpers/kozenet_ui/component_helper.rb'
+    - 'lib/kozenet_ui/engine.rb'
 
 # Style/Documentation:
 #   Exclude:
