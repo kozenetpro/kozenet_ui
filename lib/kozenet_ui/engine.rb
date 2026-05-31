@@ -95,19 +95,75 @@ module KozenetUi
 
     # rubocop:disable Rails/OutputSafety
     def kozenet_ui_theme_variables
-      <<~CSS.html_safe
-        :root {
-          /* Design Tokens */
-          #{KozenetUi::Theme::Tokens.to_css_variables}
-          /* Color Palette (Light Mode) */
-          #{KozenetUi.configuration.palette.to_css_variables(mode: :light)}
-        }
+      palette = KozenetUi.configuration.palette
+      light_palette = palette.to_css_variables(mode: :light)
+      dark_palette = palette.to_css_variables(mode: :dark)
+      tokens = KozenetUi::Theme::Tokens.to_css_variables
 
-        [data-theme="dark"], .dark {
-          /* Color Palette (Dark Mode) */
-          #{KozenetUi.configuration.palette.to_css_variables(mode: :dark)}
-        }
-      CSS
+      case KozenetUi.configuration.theme
+      when :dark, "dark"
+        <<~CSS.html_safe
+          :root {
+            color-scheme: dark;
+            /* Design Tokens */
+            #{tokens}
+            /* Color Palette (Dark Mode) */
+            #{dark_palette}
+          }
+
+          [data-theme="light"], .light {
+            color-scheme: light;
+            /* Color Palette (Light Mode) */
+            #{light_palette}
+          }
+        CSS
+      when :system, "system"
+        <<~CSS.html_safe
+          :root {
+            color-scheme: light;
+            /* Design Tokens */
+            #{tokens}
+            /* Color Palette (Light Mode) */
+            #{light_palette}
+          }
+
+          @media (prefers-color-scheme: dark) {
+            :root:not([data-theme="light"]) {
+              color-scheme: dark;
+              /* Color Palette (Dark Mode) */
+              #{dark_palette}
+            }
+          }
+
+          [data-theme="dark"], .dark {
+            color-scheme: dark;
+            /* Color Palette (Dark Mode) */
+            #{dark_palette}
+          }
+
+          [data-theme="light"], .light {
+            color-scheme: light;
+            /* Color Palette (Light Mode) */
+            #{light_palette}
+          }
+        CSS
+      else
+        <<~CSS.html_safe
+          :root {
+            color-scheme: light;
+            /* Design Tokens */
+            #{tokens}
+            /* Color Palette (Light Mode) */
+            #{light_palette}
+          }
+
+          [data-theme="dark"], .dark {
+            color-scheme: dark;
+            /* Color Palette (Dark Mode) */
+            #{dark_palette}
+          }
+        CSS
+      end
     end
     # rubocop:enable Rails/OutputSafety
   end

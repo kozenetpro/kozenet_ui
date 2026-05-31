@@ -32,13 +32,13 @@ module KozenetUi
       }.freeze
 
       NEUTRALS_DARK = {
-        bg_base: "#0f172a",
-        bg_elevated: "#1e293b",
-        bg_muted: "#334155",
-        text_default: "#f1f5f9",
-        text_muted: "#94a3b8",
-        border_default: "#334155",
-        border_muted: "#1e293b"
+        bg_base: "#101318",
+        bg_elevated: "#181c23",
+        bg_muted: "#242a35",
+        text_default: "#f8fafc",
+        text_muted: "#cbd5e1",
+        border_default: "#303744",
+        border_muted: "#242a35"
       }.freeze
 
       attr_reader :colors
@@ -72,6 +72,7 @@ module KozenetUi
         neutrals.each do |name, value|
           variables << "--kz-#{name.to_s.tr("_", "-")}: #{value};"
         end
+        variables.concat(neutral_aliases)
 
         # Gradient tokens (allow user to override or fallback to palette)
         if mode == :dark
@@ -99,6 +100,19 @@ module KozenetUi
       # rubocop:enable Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/MethodLength, Metrics/PerceivedComplexity
 
       private
+
+      def neutral_aliases
+        [
+          "--kz-bg-default: var(--kz-bg-base);",
+          "--bg-default: var(--kz-bg-base);",
+          "--bg-muted: var(--kz-bg-muted);",
+          "--bg-elevated: var(--kz-bg-elevated);",
+          "--text-default: var(--kz-text-default);",
+          "--text-muted: var(--kz-text-muted);",
+          "--border-default: var(--kz-border-default);",
+          "--border-strong: var(--kz-border-default);"
+        ]
+      end
 
       # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
       # Generate 50-900 shades from a base color

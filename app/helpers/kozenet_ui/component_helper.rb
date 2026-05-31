@@ -39,17 +39,62 @@ module KozenetUi
     # Inject inline theme variables (CSP-compliant)
     def kozenet_ui_theme_variables_tag
       # rubocop:disable Rails/OutputSafety
-      content_tag(:style, nonce: content_security_policy_nonce) do
-        palette = KozenetUi.configuration.palette
-        tokens = KozenetUi::Theme::Tokens
+      content_tag(:style, kozenet_ui_theme_variables, nonce: content_security_policy_nonce)
+      # rubocop:enable Rails/OutputSafety
+    end
 
+    def kozenet_ui_theme_variables
+      # rubocop:disable Rails/OutputSafety
+      palette = KozenetUi.configuration.palette
+      light_palette = palette.to_css_variables(mode: :light)
+      dark_palette = palette.to_css_variables(mode: :dark)
+      tokens = KozenetUi::Theme::Tokens.to_css_variables
+
+      case KozenetUi.configuration.theme
+      when :dark, "dark"
         <<~CSS.html_safe
           :root {
-            #{tokens.to_css_variables}
-            #{palette.to_css_variables(mode: :light)}
+            color-scheme: dark;
+            #{tokens}
+            #{dark_palette}
+          }
+          [data-theme="light"], .light {
+            color-scheme: light;
+            #{light_palette}
+          }
+        CSS
+      when :system, "system"
+        <<~CSS.html_safe
+          :root {
+            color-scheme: light;
+            #{tokens}
+            #{light_palette}
+          }
+          @media (prefers-color-scheme: dark) {
+            :root:not([data-theme="light"]) {
+              color-scheme: dark;
+              #{dark_palette}
+            }
           }
           [data-theme="dark"], .dark {
-            #{palette.to_css_variables(mode: :dark)}
+            color-scheme: dark;
+            #{dark_palette}
+          }
+          [data-theme="light"], .light {
+            color-scheme: light;
+            #{light_palette}
+          }
+        CSS
+      else
+        <<~CSS.html_safe
+          :root {
+            color-scheme: light;
+            #{tokens}
+            #{light_palette}
+          }
+          [data-theme="dark"], .dark {
+            color-scheme: dark;
+            #{dark_palette}
           }
         CSS
       end
